@@ -4,7 +4,7 @@ from django.db import models
 # Model that represents a word
 class Word(models.Model):
   id = models.CharField(primary_key=True, max_length=50, editable=False)
-  users = models.ManyToManyField(settings.AUTH_USER_MODEL, null=True, blank=True, related_name="words")
+  users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="words")
   pronunciation = models.CharField(max_length=75)
 
 # Model that represents a type of word (i.e. noun, verb. adjective, etc.)
