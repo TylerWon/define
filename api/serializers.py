@@ -72,3 +72,11 @@ class WordSerializer(serializers.ModelSerializer):
       "users",
       "pronunciation",
     ]
+
+# Serializer for the WordType model
+class WordTypeSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = WordType
+    fields = [
+      "id"
+    ]
