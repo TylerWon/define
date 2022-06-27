@@ -1,0 +1,22 @@
+version: "3.9"
+   
+services:
+  define-db:
+    container_name: define-db
+    hostname: define-db
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file: .env
+  define-web:
+    container_name: define-web
+    hostname: define-web
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - define-db
