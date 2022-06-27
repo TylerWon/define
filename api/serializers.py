@@ -80,3 +80,14 @@ class WordTypeSerializer(serializers.ModelSerializer):
     fields = [
       "id"
     ]
+
+# Serializer for the WordDefinition model
+class WordDefinitionSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = WordDefinition
+    fields = [
+      "id",
+      "word",
+      "word_type",
+      "definition_text",
+    ]
