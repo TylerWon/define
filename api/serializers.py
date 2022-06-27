@@ -62,3 +62,13 @@ class UserSerializer(serializers.ModelSerializer):
     instance.save()
 
     return instance
+
+# Serializer for the Word model
+class WordSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Word
+    fields = [
+      "id",
+      "users",
+      "pronunciation",
+    ]
