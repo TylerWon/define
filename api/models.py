@@ -7,12 +7,18 @@ class Word(models.Model):
   spelling = models.CharField(max_length=50)
   pronunciation = models.CharField(max_length=75)
 
+  def __str__(self):
+    return self.spelling
+
 # Model that represents a type of word (i.e. noun, verb. adjective, etc.)
-class WordType(models.Model):
+class Type(models.Model):
   name = models.CharField(max_length=25)
 
+  def __str__(self):
+    return self.name
+
 # Model that represents a word definition
-class WordDefinition(models.Model):
+class Definition(models.Model):
   word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="definitions")
-  word_type = models.ForeignKey(WordType, on_delete=models.CASCADE, related_name="definitions")
+  type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="definitions")
   definition_text = models.CharField(max_length=350)

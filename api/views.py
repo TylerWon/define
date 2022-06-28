@@ -7,15 +7,15 @@ from rest_framework.views import APIView
 
 from .models import (
   Word,
-  WordDefinition,
-  WordType,
+  Definition,
+  Type,
 )
 
 from .serializers import (
   UserSerializer,
   WordSerializer,
-  WordDefinitionSerializer,
-  WordTypeSerializer,
+  DefinitionSerializer,
+  TypeSerializer,
 )
 
 from .permissions import (
@@ -60,25 +60,25 @@ class WordViewSet(viewsets.ModelViewSet):
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Supported request methods:
-#   - GET = List all WordTypes/retrieve a WordType
-#   - POST = Create a WordType
-#   - PUT = Update all fields of a WordType
-#   - PATCH = Update some fields of a WordType
-#   - DELETE = Delete a WordType
-class WordTypeViewSet(viewsets.ModelViewSet):
-  queryset = WordType.objects.all()
-  serializer_class = WordTypeSerializer
+#   - GET = List all Types/retrieve a Type
+#   - POST = Create a Type
+#   - PUT = Update all fields of a Type
+#   - PATCH = Update some fields of a Type
+#   - DELETE = Delete a Type
+class TypeViewSet(viewsets.ModelViewSet):
+  queryset = Type.objects.all()
+  serializer_class = TypeSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Supported request methods:
-#   - GET = List all WordDefinitions/retrieve a WordDefinition
-#   - POST = Create a WordDefinition
-#   - PUT = Update all fields of a WordDefinition
-#   - PATCH = Update some fields of a WordDefinition
-#   - DELETE = Delete a WordDefinition
-class WordDefinitionViewSet(viewsets.ModelViewSet):
-  queryset = WordDefinition.objects.all()
-  serializer_class = WordDefinitionSerializer
+#   - GET = List all Definitions/retrieve a Definition
+#   - POST = Create a Definition
+#   - PUT = Update all fields of a Definition
+#   - PATCH = Update some fields of a Definition
+#   - DELETE = Delete a Definition
+class DefinitionViewSet(viewsets.ModelViewSet):
+  queryset = Definition.objects.all()
+  serializer_class = DefinitionSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Supported request methods:

@@ -2,10 +2,10 @@ from django.contrib import admin
 
 from .models import (
   Word,
-  WordDefinition,
-  WordType,
+  Definition,
+  Type,
 )
 
 admin.site.register(Word)
-admin.site.register(WordType)
-admin.site.register(WordDefinition)
+admin.site.register(Type)
+admin.site.register(Definition)

@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 from .models import (
   Word,
-  WordDefinition,
-  WordType,
+  Definition,
+  Type,
 )
 
 # Serializer for the User model
@@ -72,22 +72,22 @@ class WordSerializer(serializers.ModelSerializer):
       "pronunciation",
     ]
 
-# Serializer for the WordType model
-class WordTypeSerializer(serializers.ModelSerializer):
+# Serializer for the Type model
+class TypeSerializer(serializers.ModelSerializer):
   class Meta:
-    model = WordType
+    model = Type
     fields = [
       "id",
       "name",
     ]
 
-# Serializer for the WordDefinition model
-class WordDefinitionSerializer(serializers.ModelSerializer):
+# Serializer for the Definition model
+class DefinitionSerializer(serializers.ModelSerializer):
   class Meta:
-    model = WordDefinition
+    model = Definition
     fields = [
       "id",
       "word",
-      "word_type",
+      "type",
       "definition_text",
     ]
