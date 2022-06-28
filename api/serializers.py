@@ -46,7 +46,6 @@ class UserSerializer(serializers.ModelSerializer):
             password = validated_data.get("password"),
             first_name = validated_data.get("first_name"),
             last_name = validated_data.get("last_name"),
-            is_actice = validated_data.get("is_active"),
           )
     return user
 
@@ -57,7 +56,6 @@ class UserSerializer(serializers.ModelSerializer):
     instance.password = make_password(validated_data.get("password", instance.password))
     instance.first_name = validated_data.get("first_name", instance.first_name)
     instance.last_name = validated_data.get("last_name", instance.last_name)
-    instance.is_active = validated_data.get("is_active", instance.is_active)
 
     instance.save()
 
