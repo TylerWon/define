@@ -69,6 +69,16 @@ class WordViewSet(viewsets.ModelViewSet):
   serializer_class = WordSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+  # Supported request methods:
+  #   - GET = Retrieve the Definitions of a Word
+  @action(detail=True, methods=["get"])
+  def definitions(self, request, pk):
+    definitions = Definition.objects.filter(word=pk)
+
+    serializer = DefinitionSerializer(definitions, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 # Supported request methods:
 #   - GET = List all Types/retrieve a Type
 #   - POST = Create a Type
