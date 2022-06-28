@@ -68,6 +68,7 @@ class WordSerializer(serializers.ModelSerializer):
     fields = [
       "id",
       "users",
+      "spelling",
       "pronunciation",
     ]
 
@@ -76,7 +77,8 @@ class WordTypeSerializer(serializers.ModelSerializer):
   class Meta:
     model = WordType
     fields = [
-      "id"
+      "id",
+      "name",
     ]
 
 # Serializer for the WordDefinition model

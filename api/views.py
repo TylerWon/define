@@ -47,3 +47,14 @@ class UserViewSet(viewsets.ModelViewSet):
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Supported request methods:
+#   - GET = List all Words/retrieve a Word
+#   - POST = Create a Word
+#   - PUT = Update all fields of a Word
+#   - PATCH = Update some fields of a Word
+#   - DELETE = Delete a Word
+class WordViewSet(viewsets.ModelViewSet):
+  queryset = Word.objects.all()
+  serializer_class = WordSerializer
+  permission_classes = [permissions.IsAuthenticatedOrReadOnly]

@@ -3,8 +3,8 @@ from django.db import models
 
 # Model that represents a word
 class Word(models.Model):
-  spelling = models.CharField(max_length=50)
   users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="words")
+  spelling = models.CharField(max_length=50)
   pronunciation = models.CharField(max_length=75)
 
 # Model that represents a type of word (i.e. noun, verb. adjective, etc.)
