@@ -47,6 +47,16 @@ class UserViewSet(viewsets.ModelViewSet):
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+  # Supported request methods:
+  #   - GET = Retrieve the Words of a User
+  @action(detail=True, methods=["get"])
+  def words(self, request, pk):
+    words = Word.objects.filter(users=pk)
+
+    serializer = WordSerializer(words, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Supported request methods:
 #   - GET = List all Words/retrieve a Word
