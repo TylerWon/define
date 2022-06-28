@@ -90,6 +90,16 @@ class TypeViewSet(viewsets.ModelViewSet):
   serializer_class = TypeSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+  # Supported request methods:
+  #   - GET = Retrieve the Definitions for a Type
+  @action(detail=True, methods=["get"])
+  def definitions(self, request, pk):
+    definitions = Definition.objects.filter(type=pk)
+
+    serializer = DefinitionSerializer(definitions, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 # Supported request methods:
 #   - GET = List all Definitions/retrieve a Definition
 #   - POST = Create a Definition
