@@ -3,13 +3,13 @@ from django.db import models
 
 # Model that represents a word
 class Word(models.Model):
-  id = models.CharField(primary_key=True, max_length=50)
+  spelling = models.CharField(max_length=50)
   users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="words")
   pronunciation = models.CharField(max_length=75)
 
 # Model that represents a type of word (i.e. noun, verb. adjective, etc.)
 class WordType(models.Model):
-  id = models.CharField(primary_key=True, max_length=25)
+  name = models.CharField(max_length=25)
 
 # Model that represents a word definition
 class WordDefinition(models.Model):
