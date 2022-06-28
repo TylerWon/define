@@ -11,4 +11,6 @@ router.register(r"worddefinitions", views.WordDefinitionViewSet)
 
 urlpatterns = [
   path('', include(router.urls)),
+  path('login/', views.LoginView.as_view()),
+  path('logout/', views.LogoutView.as_view()),
 ]

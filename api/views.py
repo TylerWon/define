@@ -79,4 +79,35 @@ class WordTypeViewSet(viewsets.ModelViewSet):
 class WordDefinitionViewSet(viewsets.ModelViewSet):
   queryset = WordDefinition.objects.all()
   serializer_class = WordDefinitionSerializer
-  # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+# Supported request methods:
+#   - POST = Log a User in
+class LoginView(APIView):
+  permission_classes = [permissions.AllowAny]
+
+  # Expected request data:
+  #   - email
+  #   - password
+  def post(self, request):
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    user = authenticate(request, username=email, password=password)
+
+    if user is not None:
+      login(request, user)
+
+      return Response({ "message": "Login successful" }, status=status.HTTP_200_OK)
+    
+    return Response({ "message": "Login unsuccessful. Invalid credentials." }, status=status.HTTP_400_BAD_REQUEST)
+  
+# Supported request methods:
+#   - GET = Log a User out
+class LogoutView(APIView):
+  permission_classes = [permissions.IsAuthenticated]
+
+  def get(self, request):
+    logout(request)
+
+    return Response({ "message": "Logout successful."}, status=status.HTTP_200_OK)
