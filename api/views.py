@@ -58,3 +58,25 @@ class WordViewSet(viewsets.ModelViewSet):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+# Supported request methods:
+#   - GET = List all WordTypes/retrieve a WordType
+#   - POST = Create a WordType
+#   - PUT = Update all fields of a WordType
+#   - PATCH = Update some fields of a WordType
+#   - DELETE = Delete a WordType
+class WordTypeViewSet(viewsets.ModelViewSet):
+  queryset = WordType.objects.all()
+  serializer_class = WordTypeSerializer
+  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+# Supported request methods:
+#   - GET = List all WordDefinitions/retrieve a WordDefinition
+#   - POST = Create a WordDefinition
+#   - PUT = Update all fields of a WordDefinition
+#   - PATCH = Update some fields of a WordDefinition
+#   - DELETE = Delete a WordDefinition
+class WordDefinitionViewSet(viewsets.ModelViewSet):
+  queryset = WordDefinition.objects.all()
+  serializer_class = WordDefinitionSerializer
+  # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
