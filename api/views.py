@@ -57,7 +57,29 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer = WordSerializer(words, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+  
+   # Supported request methods:
+  #   - GET = Update the password of a User
+  @action(detail=True, methods=["patch"])
+  def password(self, request, pk):
+    try:
+      user = User.objects.get(pk=pk)
+    except:
+      return Response({ "detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
+    old_password = request.data.get("old_password")
+    new_password = request.data.get("new_password")
+
+    if user.check_password(old_password):
+      user.set_password(new_password)
+      user.save()
+
+      login(request, user)  # log User in after password change, otherwise User is logged out
+      
+      return Response({ "detail": "Password updated."}, status=status.HTTP_200_OK)
+    
+    return Response({ "detail": "Password not updated. Old password does match new password."}, status=status.HTTP_400_BAD_REQUEST)
+    
 # Supported request methods:
 #   - GET = List all Words/retrieve a Word
 #   - POST = Create a Word
@@ -128,9 +150,9 @@ class LoginView(APIView):
     if user is not None:
       login(request, user)
 
-      return Response({ "message": "Login successful" }, status=status.HTTP_200_OK)
+      return Response({ "detail": "Login successful" }, status=status.HTTP_200_OK)
     
-    return Response({ "message": "Login unsuccessful. Invalid credentials." }, status=status.HTTP_400_BAD_REQUEST)
+    return Response({ "detail": "Login unsuccessful. Invalid credentials." }, status=status.HTTP_400_BAD_REQUEST)
   
 # Supported request methods:
 #   - GET = Log a User out
@@ -140,4 +162,4 @@ class LogoutView(APIView):
   def get(self, request):
     logout(request)
 
-    return Response({ "message": "Logout successful."}, status=status.HTTP_200_OK)
+    return Response({ "detail": "Logout successful."}, status=status.HTTP_200_OK)
