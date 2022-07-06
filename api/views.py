@@ -12,10 +12,11 @@ from .models import (
 )
 
 from .serializers import (
-  UserSerializer,
-  WordSerializer,
   DefinitionSerializer,
   TypeSerializer,
+  UserSerializer,
+  WordSerializer,
+  WordAndDefinitionsSerializer,
 )
 
 from .permissions import (
@@ -100,6 +101,14 @@ class WordViewSet(viewsets.ModelViewSet):
     serializer = DefinitionSerializer(definitions, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Supported request methods:
+#   - POST = Create a Word and its Definitions
+class WordAndDefinitionsViewSet(viewsets.ModelViewSet):
+  queryset = Word.objects.all()
+  serializer_class = WordAndDefinitionsSerializer
+  permission_classes = [permissions.AllowAny]
+  http_method_names = ["post"]
 
 # Supported request methods:
 #   - GET = List all Types/retrieve a Type

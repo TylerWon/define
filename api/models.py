@@ -19,6 +19,6 @@ class Type(models.Model):
 
 # Model that represents a word definition
 class Definition(models.Model):
-  word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="definitions")
-  type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="definitions")
+  word = models.ForeignKey(Word, on_delete=models.CASCADE, null=True, blank=True, related_name="word_definitions")
+  type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="type_definitions")
   definition_text = models.CharField(max_length=350)

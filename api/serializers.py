@@ -71,6 +71,7 @@ class TypeSerializer(serializers.ModelSerializer):
 
 # Serializer for the Definition model
 class DefinitionSerializer(serializers.ModelSerializer):
+
   class Meta:
     model = Definition
     fields = [
@@ -79,3 +80,33 @@ class DefinitionSerializer(serializers.ModelSerializer):
       "type",
       "definition_text",
     ]
+
+# Serializer for the Word model where the Definitions for the Word are nested
+class WordAndDefinitionsSerializer(serializers.ModelSerializer):
+  word_definitions = DefinitionSerializer(many=True)
+
+  class Meta:
+    model = Word
+    fields = [
+      "id",
+      "users",
+      "spelling",
+      "pronunciation",
+      "word_definitions",
+    ]
+  
+  # Override default create method to handle write operations with nested serializer
+  def create(self, validated_data):
+    # Pop data that is not for a Word
+    definitions_data = validated_data.pop("word_definitions")
+    users = validated_data.pop("users")
+
+    # Create a Word add users to the Word after because many-to-many relationship
+    word = Word.objects.create(**validated_data)
+    word.users.add(*users)   
+
+    # Create Definitions, associating each with the Word
+    for definition_data in definitions_data:
+      definition = Definition.objects.create(word=word, **definition_data)
+    
+    return word
