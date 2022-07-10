@@ -58,6 +58,16 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer = WordSerializer(words, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+  # Supported request methods:
+  #   - GET = Retrieve the Words (and their Definitions) of a User
+  @action(detail=True, methods=["get"])
+  def words_and_definitions(self, request, pk):
+    words = Word.objects.filter(users=pk)
+
+    serializer = WordAndDefinitionsSerializer(words, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
   
    # Supported request methods:
   #   - GET = Update the password of a User
