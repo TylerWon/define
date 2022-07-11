@@ -53,3 +53,7 @@ data/
 
 # Environment variables
 .env
+
+# Webpack
+frontend/static/webpack_bundles
+frontend/webpack-stats.json
