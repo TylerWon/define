@@ -169,7 +169,9 @@ class LoginView(APIView):
     if user is not None:
       login(request, user)
 
-      return Response({ "detail": "Login successful" }, status=status.HTTP_200_OK)
+      serializer = UserSerializer(user)
+
+      return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response({ "detail": "Login unsuccessful. Invalid credentials." }, status=status.HTTP_400_BAD_REQUEST)
   
