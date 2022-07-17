@@ -11,12 +11,7 @@ const initialState = {
 };
 
 // Thunk for logging a User in
-export const login = createAsyncThunk("user/login", async (email, password) => {
-  const data = {
-    email: email,
-    password: password
-  }
-
+export const login = createAsyncThunk("user/login", async (data) => {
   const response = await axios.post("/api/login", data);
   return response;
 });
@@ -26,6 +21,12 @@ export const logout = createAsyncThunk("user/logout", async () => {
   const response = await axios.get("/api/logout/");
   return response;
 });
+
+// Thunk for registering a User
+export const register = createAsyncThunk("user/register", async (data) => {
+  const response = await axios.post("/api/users/", data);
+  return response;
+})
 
 export const userSlice = createSlice({
   name: "user",
@@ -52,7 +53,7 @@ export const userSlice = createSlice({
           state.error = response.data.message;
         }
       })
-      .addCase(login,rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
@@ -63,7 +64,31 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state = initialState;
       })
-      .addCase(logout,rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+
+      .addCase(register.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        const response = action.payload;
+
+        if (response === 201) {
+          const user = response.data;
+
+          state.status = "fulfilled";
+          state.id = user.id;
+          state.email = user.email;
+          state.firstName = user.firstName;
+          state.lastName = user.lastName;
+        } else {
+          state.status = "failed";
+          state.error = response.data.message;
+        }
+      })
+      .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
