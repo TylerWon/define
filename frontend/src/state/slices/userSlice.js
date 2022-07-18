@@ -56,10 +56,6 @@ export const userSlice = createSlice({
           state.error = response.data.detail;
         }
       })
-      .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
       
       .addCase(logout.fulfilled, (state, action) => {
         state.id = initialState.id;
@@ -68,15 +64,10 @@ export const userSlice = createSlice({
         state.lastName = initialState.lastName;
         state.status = "fulfilled";
       })
-      .addCase(logout.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
 
       .addCase(register.fulfilled, (state, action) => {
         const response = action.payload;
 
-        if (response.status === 201) {
           const user = response.data;
 
           state.status = "fulfilled";
@@ -84,14 +75,6 @@ export const userSlice = createSlice({
           state.email = user.email;
           state.firstName = user.first_name;
           state.lastName = user.last_name;
-        } else {
-          state.status = "failed";
-          state.error = response.data.detail;
-        }
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
       })
 
       .addCase(updateUser.fulfilled, (state, action) => {
@@ -110,15 +93,18 @@ export const userSlice = createSlice({
           state.error = response.data.detail;
         }
       })
-      .addCase(updateUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
 
       .addMatcher((action) => {
         return action.type == login.pending || action.type == logout.pending || action.type == register.pending || action.type == updateUser.pending 
       }, (state, action) => {
         state.status = "loading";
+      })
+
+      .addMatcher((action) => {
+        return action.type == login.rejected || action.type == logout.rejected || action.type == register.rejected || action.type == updateUser.rejected 
+      }, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       })
   }
 })
