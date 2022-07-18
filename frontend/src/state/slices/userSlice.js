@@ -40,9 +40,6 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(login.pending, (state, action) => {
-        state.status = "loading";
-      })
       .addCase(login.fulfilled, (state, action) => {
         const response = action.payload;
 
@@ -64,9 +61,6 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       })
       
-      .addCase(logout.pending, (state, action) => {
-        state.status = "loading";
-      })
       .addCase(logout.fulfilled, (state, action) => {
         state.id = initialState.id;
         state.email = initialState.email;
@@ -79,9 +73,6 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       })
 
-      .addCase(register.pending, (state, action) => {
-        state.status = "loading";
-      })
       .addCase(register.fulfilled, (state, action) => {
         const response = action.payload;
 
@@ -103,9 +94,6 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       })
 
-      .addCase(updateUser.pending, (state, action) => {
-        state.status = "loading";
-      })
       .addCase(updateUser.fulfilled, (state, action) => {
         const response = action.payload;
 
@@ -125,6 +113,12 @@ export const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+
+      .addMatcher((action) => {
+        return action.type == login.pending || action.type == logout.pending || action.type == register.pending || action.type == updateUser.pending 
+      }, (state, action) => {
+        state.status = "loading";
       })
   }
 })
