@@ -46,6 +46,8 @@ export const userSlice = createSlice({
         state.firstName = initialState.firstName;
         state.lastName = initialState.lastName;
         state.status = "fulfilled";
+
+        localStorage.removeItem("user");
       })
 
       .addMatcher((action) => {
@@ -58,6 +60,8 @@ export const userSlice = createSlice({
         state.email = user.email;
         state.firstName = user.first_name;
         state.lastName = user.last_name;
+
+        localStorage.setItem("user", JSON.stringify(state));
       })
 
       .addMatcher((action) => {
