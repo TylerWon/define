@@ -12,7 +12,7 @@ const initialState = {
 
 // Thunk for logging a User in
 export const login = createAsyncThunk("user/login", async (data) => {
-  const response = await axios.post("/api/login", data);
+  const response = await axios.post("/api/login/", data);
   return response;
 });
 
@@ -29,8 +29,8 @@ export const register = createAsyncThunk("user/register", async (data) => {
 });
 
 // Thunk for updating a User's info
-export const updateUser = createAsyncThunk("user/update", async (userId, data) => {
-  const response = await axios.patch(`/api/users/${userId}/`, data);
+export const updateUser = createAsyncThunk("user/update", async (data) => {
+  const response = await axios.patch(`/api/users/${data.id}/`, data);
   return response;
 })
 
@@ -46,14 +46,14 @@ export const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         const response = action.payload;
 
-        if (response === 200) {
+        if (response.status === 200) {
           const user = response.data;
 
           state.status = "fulfilled";
           state.id = user.id;
           state.email = user.email;
-          state.firstName = user.firstName;
-          state.lastName = user.lastName;
+          state.firstName = user.first_name;
+          state.lastName = user.last_name;
         } else {
           state.status = "failed";
           state.error = response.data.detail;
@@ -68,7 +68,11 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state = initialState;
+        state.id = initialState.id;
+        state.email = initialState.email;
+        state.firstName = initialState.firstName;
+        state.lastName = initialState.lastName;
+        state.status = "fulfilled";
       })
       .addCase(logout.rejected, (state, action) => {
         state.status = "failed";
@@ -81,14 +85,14 @@ export const userSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         const response = action.payload;
 
-        if (response === 201) {
+        if (response.status === 201) {
           const user = response.data;
 
           state.status = "fulfilled";
           state.id = user.id;
           state.email = user.email;
-          state.firstName = user.firstName;
-          state.lastName = user.lastName;
+          state.firstName = user.first_name;
+          state.lastName = user.last_name;
         } else {
           state.status = "failed";
           state.error = response.data.detail;
@@ -105,14 +109,14 @@ export const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         const response = action.payload;
 
-        if (response === 200) {
+        if (response.status === 200) {
           const user = response.data;
 
           state.status = "fulfilled";
           state.id = user.id;
           state.email = user.email;
-          state.firstName = user.firstName;
-          state.lastName = user.lastName;
+          state.firstName = user.first_name;
+          state.lastName = user.last_name;
         } else {
           state.status = "failed";
           state.error = response.data.detail;
@@ -124,3 +128,5 @@ export const userSlice = createSlice({
       })
   }
 })
+
+export default userSlice.reducer;
