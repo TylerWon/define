@@ -39,17 +39,7 @@ export const userSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers(builder) {
-    builder
-      .addCase(login.fulfilled, (state, action) => {
-        const user = action.payload;
-
-        state.status = "fulfilled";
-        state.id = user.id;
-        state.email = user.email;
-        state.firstName = user.first_name;
-        state.lastName = user.last_name;
-      })
-      
+    builder 
       .addCase(logout.fulfilled, (state, action) => {
         state.id = initialState.id;
         state.email = initialState.email;
@@ -58,17 +48,9 @@ export const userSlice = createSlice({
         state.status = "fulfilled";
       })
 
-      .addCase(register.fulfilled, (state, action) => {
-        const user = action.payload;
-
-        state.status = "fulfilled";
-        state.id = user.id;
-        state.email = user.email;
-        state.firstName = user.first_name;
-        state.lastName = user.last_name;
-      })
-
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addMatcher((action) => {
+        return action.type == login.fulfilled || action.type == register.fulfilled || action.type == updateUser.fulfilled
+      }, (state, action) => {
         const user = action.payload;
 
         state.status = "fulfilled";
