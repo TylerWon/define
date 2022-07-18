@@ -13,7 +13,7 @@ const initialState = {
 // Thunk for logging a User in
 export const login = createAsyncThunk("user/login", async (data) => {
   const response = await axios.post("/api/login/", data);
-  return response;
+  return response.data;
 });
 
 // Thunk for logging a User out
@@ -25,13 +25,13 @@ export const logout = createAsyncThunk("user/logout", async () => {
 // Thunk for registering a User
 export const register = createAsyncThunk("user/register", async (data) => {
   const response = await axios.post("/api/users/", data);
-  return response;
+  return response.data
 });
 
 // Thunk for updating a User's info
 export const updateUser = createAsyncThunk("user/update", async (data) => {
   const response = await axios.patch(`/api/users/${data.id}/`, data);
-  return response;
+  return response.data
 })
 
 export const userSlice = createSlice({
@@ -41,20 +41,13 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        const response = action.payload;
+        const user = action.payload;
 
-        if (response.status === 200) {
-          const user = response.data;
-
-          state.status = "fulfilled";
-          state.id = user.id;
-          state.email = user.email;
-          state.firstName = user.first_name;
-          state.lastName = user.last_name;
-        } else {
-          state.status = "failed";
-          state.error = response.data.detail;
-        }
+        state.status = "fulfilled";
+        state.id = user.id;
+        state.email = user.email;
+        state.firstName = user.first_name;
+        state.lastName = user.last_name;
       })
       
       .addCase(logout.fulfilled, (state, action) => {
@@ -66,32 +59,23 @@ export const userSlice = createSlice({
       })
 
       .addCase(register.fulfilled, (state, action) => {
-        const response = action.payload;
+        const user = action.payload;
 
-          const user = response.data;
-
-          state.status = "fulfilled";
-          state.id = user.id;
-          state.email = user.email;
-          state.firstName = user.first_name;
-          state.lastName = user.last_name;
+        state.status = "fulfilled";
+        state.id = user.id;
+        state.email = user.email;
+        state.firstName = user.first_name;
+        state.lastName = user.last_name;
       })
 
       .addCase(updateUser.fulfilled, (state, action) => {
-        const response = action.payload;
+        const user = action.payload;
 
-        if (response.status === 200) {
-          const user = response.data;
-
-          state.status = "fulfilled";
-          state.id = user.id;
-          state.email = user.email;
-          state.firstName = user.first_name;
-          state.lastName = user.last_name;
-        } else {
-          state.status = "failed";
-          state.error = response.data.detail;
-        }
+        state.status = "fulfilled";
+        state.id = user.id;
+        state.email = user.email;
+        state.firstName = user.first_name;
+        state.lastName = user.last_name;
       })
 
       .addMatcher((action) => {
