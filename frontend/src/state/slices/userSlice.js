@@ -50,11 +50,11 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder 
       .addCase(logout.fulfilled, (state, action) => {
+        state.status = "fulfilled";
         state.id = initialState.id;
         state.email = initialState.email;
         state.firstName = initialState.firstName;
         state.lastName = initialState.lastName;
-        state.status = "fulfilled";
 
         localStorage.removeItem("user");
       })
@@ -76,13 +76,13 @@ export const userSlice = createSlice({
       .addMatcher((action) => {
         return action.type == login.pending || action.type == logout.pending || action.type == register.pending || action.type == updateUser.pending 
       }, (state, action) => {
-        state.status = "loading";
+        state.status = "pending";
       })
 
       .addMatcher((action) => {
         return action.type == login.rejected || action.type == logout.rejected || action.type == register.rejected || action.type == updateUser.rejected 
       }, (state, action) => {
-        state.status = "failed";
+        state.status = "rejected";
         state.error = action.error.message;
       })
   }
