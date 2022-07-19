@@ -112,6 +112,19 @@ class WordViewSet(viewsets.ModelViewSet):
 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+  # Supported request methods:
+  #   - GET = Retrieve a Word and its Definitions based on the Word's spelling
+  @action(detail=True, methods=["get"])
+  def word_and_definitions(self, request, pk):
+    try:
+      word = Word.objects.get(spelling=pk)
+    except:
+      return Response({ "detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = WordAndDefinitionsSerializer(word)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 # Supported request methods:
 #   - POST = Create a Word and its Definitions
 class WordAndDefinitionsViewSet(viewsets.ModelViewSet):
@@ -119,6 +132,7 @@ class WordAndDefinitionsViewSet(viewsets.ModelViewSet):
   serializer_class = WordAndDefinitionsSerializer
   permission_classes = [permissions.AllowAny]
   http_method_names = ["post"]
+
 
 # Supported request methods:
 #   - GET = List all Types/retrieve a Type
