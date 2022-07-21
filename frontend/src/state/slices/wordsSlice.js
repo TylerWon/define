@@ -25,13 +25,8 @@ export const addWord = createAsyncThunk("words/add", async (data) => {
 });
 
 // Thunk for removing a Word from a User's words
-export const removeWord = createAsyncThunk("words/remove", async (data) => {
-  const wordId = data.wordId;
-  const newData = {
-    user: data.userId
-  }
-  
-  const response = await axios.patch(`/api/words/${wordId}/remove_user/`, newData);
+export const removeWord = createAsyncThunk("words/remove", async (data) => {  
+  const response = await axios.patch(`/api/words/${data.wordId}/remove_user/`, { user: data.userId });
   return response.data;
 });
 
