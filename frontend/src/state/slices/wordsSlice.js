@@ -22,7 +22,18 @@ export const addWord = createAsyncThunk("words/add", async (data) => {
     const response = await axios.post("/api/word_and_definitions/", data);
     return response.data;
   }
-})
+});
+
+// Thunk for removing a Word from a User's words
+export const removeWord = createAsyncThunk("words/remove", async (data) => {
+  const wordId = data.wordId;
+  const newData = {
+    user: data.userId
+  }
+  
+  const response = await axios.patch(`/api/words/${wordId}/remove_user/`, newData);
+  return response.data;
+});
 
 export const wordsSlice = createSlice({
   name: "words",
@@ -44,14 +55,24 @@ export const wordsSlice = createSlice({
         state.words = state.words.concat(word);
       })
 
+      .addCase(removeWord.fulfilled, (state, action) => {
+        const removedWord = action.payload;
+
+        const words = state.words;
+        const newWords = words.filter(word => word.id !== removedWord.id)
+
+        state.status = "fulfilled";
+        state.words = newWords;
+      })
+
       .addMatcher((action) => {
-        return action.type == getWords.pending || action.type == addWord.pending;
+        return action.type == getWords.pending || action.type == addWord.pending || action.type == removeWord.pending;
       }, (state, action) => {
         state.status = "pending";
       })
 
       .addMatcher((action) => {
-        return action.type == getWords.rejected || action.type == addWord.rejected;
+        return action.type == getWords.rejected || action.type == addWord.rejected || action.type == removeWord.rejected;
       }, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
