@@ -16,7 +16,7 @@ export const getWords = createAsyncThunk("words/get", async (userId) => {
 // Thunk for adding a Word to a User's words
 export const addWord = createAsyncThunk("words/add", async (data) => {
   try {
-    const response = await axios.get(`/api/words/${data.spelling}/word_and_definitions/`);
+    const response = await axios.patch(`/api/words/${data.spelling}/add_user/`, { user: data.users[0] });
     return response.data;
   } catch(e) {
     const response = await axios.post("/api/word_and_definitions/", data);
