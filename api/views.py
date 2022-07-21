@@ -113,19 +113,6 @@ class WordViewSet(viewsets.ModelViewSet):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
   # Supported request methods:
-  #   - GET = Retrieve a Word and its Definitions based on the Word's spelling
-  @action(detail=True, methods=["get"])
-  def word_and_definitions(self, request, pk):
-    try:
-      word = Word.objects.get(spelling=pk)
-    except:
-      return Response({ "detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-
-    serializer = WordAndDefinitionsSerializer(word)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
-  # Supported request methods:
   #   - GET = Add a User to a Word whose spelling is pk
   @action(detail=True, methods=["patch"])
   def add_user(self, request, pk):
