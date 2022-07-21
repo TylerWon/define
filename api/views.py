@@ -133,11 +133,11 @@ class WordViewSet(viewsets.ModelViewSet):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
   # Supported request methods:
-  #   - GET = Remove a User from a Word
+  #   - GET = Remove a User from a Word whose spelling is pk
   @action(detail=True, methods=["patch"])
   def remove_user(self, request, pk):
     try:
-      word = Word.objects.get(pk=pk)
+      word = Word.objects.get(spelling=pk)
     except:
       return Response({ "detail": "Word not found."}, status=status.HTTP_404_NOT_FOUND)
 
