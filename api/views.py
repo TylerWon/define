@@ -124,6 +124,30 @@ class WordViewSet(viewsets.ModelViewSet):
     serializer = WordAndDefinitionsSerializer(word)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+  
+  # Supported request methods:
+  #   - GET = Removes a User from a Word
+  @action(detail=True, methods=["patch"])
+  def remove_user(self, request, pk):
+    try:
+      word = Word.objects.get(pk=pk)
+    except:
+      return Response({ "detail": "Word not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+      user = User.objects.get(pk=request.data["user"])
+    except:
+      return Response({ "detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    if word.users.contains(user):
+      word.users.remove(user)
+      word.save()
+
+      serializer = WordSerializer(word)
+
+      return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response({ "detail": "The User is not associated with the Word"}, status=status.HTTP_400_BAD_REQUEST)
 
 # Supported request methods:
 #   - POST = Create a Word and its Definitions
