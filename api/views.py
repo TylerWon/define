@@ -124,9 +124,29 @@ class WordViewSet(viewsets.ModelViewSet):
     serializer = WordAndDefinitionsSerializer(word)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
-  
+
   # Supported request methods:
-  #   - GET = Removes a User from a Word
+  #   - GET = Add a User to a Word
+  @action(detail=True, methods=["patch"])
+  def add_user(self, request, pk):
+    try:
+      word = Word.objects.get(pk=pk)
+    except:
+      return Response({ "detail": "Word not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+      user = User.objects.get(pk=request.data["user"])
+    except:
+      return Response({ "detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    word.users.add(user)
+
+    serializer = WordSerializer(word)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+  # Supported request methods:
+  #   - GET = Remove a User from a Word
   @action(detail=True, methods=["patch"])
   def remove_user(self, request, pk):
     try:
@@ -156,7 +176,6 @@ class WordAndDefinitionsViewSet(viewsets.ModelViewSet):
   serializer_class = WordAndDefinitionsSerializer
   permission_classes = [permissions.AllowAny]
   http_method_names = ["post"]
-
 
 # Supported request methods:
 #   - GET = List all Types/retrieve a Type
