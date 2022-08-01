@@ -1,33 +1,27 @@
 import { 
   BrowserRouter,
   Route,
-  Routes, 
+  Routes
 } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { getWords } from "./state/slices/wordsSlice";
-import { useEffect } from "react";
 
 export default function App(props) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getWords(15));
-  }, [])
 
   return (
-    <h1>HI</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Header />}>
+          <Route path="/" element={<Home />} />
+
+          <Route element={<AuthorizedRoutes />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings/account" element={<AccountSettings />} />
+          </Route>
+        </Route>
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
-  // return (
-  //   <BrowserRouter>
-  //     <Routes>
-  //       {/* <Route path="/" element={<HeaderAndFooter />}> */}
-  //         {/* <Route index element={<Home />} /> */}
-  //         {/* <Route path="login" element={<Login />} /> */}
-  //         {/* <Route path="mywords" element={<MyWords />} /> */}
-  //         {/* <Route path="register" element={<Register />} /> */}
-  //         {/* <Route path="search" element={<Search />} /> */}
-  //       {/* </Route> */}
-  //     </Routes>
-  //   </BrowserRouter>
-  // )
 }
