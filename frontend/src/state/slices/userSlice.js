@@ -10,6 +10,7 @@ const initialState = {
   error: null,
 };
 
+// Thunks
 // Thunk for logging a User in
 export const login = createAsyncThunk("user/login", async (data) => {
   const response = await axios.post("/api/login/", data);
@@ -34,6 +35,11 @@ export const updateUser = createAsyncThunk("user/update", async (data) => {
   return response.data
 })
 
+// Custom Selectors
+// Get user
+export const selectUser = state => state.user;
+
+// User slice
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
@@ -88,6 +94,8 @@ export const userSlice = createSlice({
   }
 })
 
+// Action creators
 export const { getUserFromLocalStorage } = userSlice.actions;
 
+// Reducer
 export default userSlice.reducer;
