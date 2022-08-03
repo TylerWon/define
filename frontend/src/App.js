@@ -6,13 +6,15 @@ import {
 
 import DefineTheme from "./theme/DefineTheme";
 
+import Navbar from "./components/Navbar";
+
 export default function App(props) {
 
   return (
     <DefineTheme>
       <BrowserRouter>
         <Routes>
-          <Route element={<Header />}>
+          <Route element={<Navbar />}>
             <Route path="/" element={<Home />} />
 
             <Route element={<AuthorizedRoutes />}>
