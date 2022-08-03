@@ -6,6 +6,7 @@ import {
 
 import DefineTheme from "./theme/DefineTheme";
 
+import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 
 export default function App(props) {
@@ -17,15 +18,15 @@ export default function App(props) {
           <Route element={<Navbar />}>
             <Route path="/" element={<Home />} />
 
-            <Route element={<AuthorizedRoutes />}>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings/account" element={<AccountSettings />} />
-            </Route>
+            {/* <Route element={<AuthorizedRoutes />}> */}
+              {/* <Route path="/profile" element={<Profile />} /> */}
+              {/* <Route path="/settings/account" element={<AccountSettings />} /> */}
+            {/* </Route> */}
           </Route>
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
+          {/* <Route path="/login" element={<Login />} /> */}
+          {/* <Route path="/register" element={<Register />} /> */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
     </DefineTheme>
