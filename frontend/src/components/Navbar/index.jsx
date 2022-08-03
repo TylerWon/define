@@ -17,7 +17,7 @@ import { Link as ReactRouterLink, useNavigate} from "react-router-dom";
 import { logout, selectUser } from "../../state/slices/userSlice";
 
 // The Header for the website
-export default function Header(props) {
+export default function Navbar(props) {
   // State
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
