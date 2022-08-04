@@ -15,10 +15,7 @@ export default function Footer(props) {
       alignItems="center"
       justifyContent="flex-start"
       bgcolor="black"
-      sx={{ 
-        width: "100%",
-        padding: "0.5%"
-      }}
+      sx={{ padding: "0.5%" }}
     >
       <Typography color="white">Created by Tyler Won</Typography>
       <Link href="https://github.com/TylerWon" target="_blank" rel="noopener">
