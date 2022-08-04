@@ -5,7 +5,7 @@ import Header from "./Header";
 export default function Home(props) {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Footer />
     </>
   )
