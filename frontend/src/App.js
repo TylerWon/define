@@ -17,6 +17,7 @@ export default function App(props) {
         <Routes>
           <Route element={<Navbar />}>
             <Route path="/" element={<Home />} />
+            {/* <Route path="/dictionary/:word" element={<SearchResult />} /> */}
 
             {/* <Route element={<AuthorizedRoutes />}> */}
               {/* <Route path="/profile" element={<Profile />} /> */}
