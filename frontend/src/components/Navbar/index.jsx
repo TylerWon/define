@@ -1,5 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import {
+  AppBar,
   Box,
   Grid,
   IconButton,
@@ -8,6 +9,7 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Toolbar,
   Typography
 } from "@mui/material";
 import { useState } from "react";
@@ -64,90 +66,89 @@ export default function Navbar(props) {
 
   return (
     <>
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
-        sx={{ 
-          width: "100%",
-          padding: "0.5%",
-          borderBottom: "2px solid #DCDCDC"
-        }}
-      >
-        <Grid item>
-          <MuiLink 
-            component={ReactRouterLink} 
-            to="/"
-            underline="none"
-            color="black"
+      <AppBar sx={{ bgcolor: "white", borderBottom: "2px solid #DCDCDC" }}>
+        <Toolbar>
+          <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
           >
-            <Typography variant="h4">define</Typography>
-          </MuiLink>
-        </Grid>
-        <Grid item xs={true}>
-          <Box sx={{ display: {xs: "none", sm: "block" }}}>
-            <Stack
-              direction="row"
-              spacing={4}
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-            {user.id ? 
-              <> 
-                <PageLink color="primary" name="Profile" route="/profile" />
-                <MuiLink component="button" onClick={handleLogoutClick} underline="none" color="primary">
-                  <Typography>Logout</Typography>
-                </MuiLink>     
-              </>
-            : 
-              <>
-                <PageLink color="primary" name="Login" route="/login" />
-                <PageLink color="primary" name="Sign up" route="/register" />
-              </>
-            }
-            </Stack>
-          </Box>
-
-          <Box sx={{ display: {xs: "block", sm: "none" }}}>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="flex-end"
-              sx={{ width: "100%" }}
-            >
-              <IconButton onClick={handleMenuClick}>
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                anchorEl={menuAnchorEl}
-                open={menuOpen}
-                onClose={handleMenuClose}
-                onClick={handleMenuClose}
+            <Grid item>
+              <MuiLink 
+                component={ReactRouterLink} 
+                to="/"
+                underline="none"
+                color="black"
               >
+                <Typography variant="h4">define</Typography>
+              </MuiLink>
+            </Grid>
+            <Grid item xs={true}>
+              <Box sx={{ display: {xs: "none", sm: "block" }}}>
+                <Stack
+                  direction="row"
+                  spacing={4}
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
                 {user.id ? 
-                  <MenuList> 
-                    <MenuItem>
-                      <PageLink color="inherit" name="Profile" route="/profile" />
-                    </MenuItem>
-                    <MenuItem onClick={handleLogoutClick}>
+                  <> 
+                    <PageLink color="primary" name="Profile" route="/profile" />
+                    <MuiLink component="button" onClick={handleLogoutClick} underline="none" color="primary">
                       <Typography>Logout</Typography>
-                    </MenuItem>
-                  </MenuList>
+                    </MuiLink>     
+                  </>
                 : 
-                  <MenuList> 
-                    <MenuItem>
-                      <PageLink color="inherit" name="Login" route="/login" />
-                    </MenuItem>
-                    <MenuItem>
-                      <PageLink color="inherit" name="Sign up" route="/register" />
-                    </MenuItem>
-                  </MenuList>
+                  <>
+                    <PageLink color="primary" name="Login" route="/login" />
+                    <PageLink color="primary" name="Sign up" route="/register" />
+                  </>
                 }
-              </Menu>
-            </Stack>
-          </Box>
-        </Grid>
-      </Grid>
+                </Stack>
+              </Box>
+
+              <Box sx={{ display: {xs: "block", sm: "none" }}}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  sx={{ width: "100%" }}
+                >
+                  <IconButton onClick={handleMenuClick}>
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    anchorEl={menuAnchorEl}
+                    open={menuOpen}
+                    onClose={handleMenuClose}
+                    onClick={handleMenuClose}
+                  >
+                    {user.id ? 
+                      <MenuList> 
+                        <MenuItem>
+                          <PageLink color="inherit" name="Profile" route="/profile" />
+                        </MenuItem>
+                        <MenuItem onClick={handleLogoutClick}>
+                          <Typography>Logout</Typography>
+                        </MenuItem>
+                      </MenuList>
+                    : 
+                      <MenuList> 
+                        <MenuItem>
+                          <PageLink color="inherit" name="Login" route="/login" />
+                        </MenuItem>
+                        <MenuItem>
+                          <PageLink color="inherit" name="Sign up" route="/register" />
+                        </MenuItem>
+                      </MenuList>
+                    }
+                  </Menu>
+                </Stack> 
+              </Box>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
 
       <Outlet />
     </>
