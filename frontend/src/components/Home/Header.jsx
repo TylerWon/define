@@ -29,12 +29,15 @@ export default function Header(props) {
   return (
     <Grid
       container
-      alignItems="stretch"
+      position="absolute"
+      top="0px"
+      alignItems="center"
       justifyContent="center"
       sx={{ 
         backgroundImage: `url(${home})`,
         backgroundSize: "cover", 
-        backgroundPosition: "center center"
+        backgroundPosition: "center center",
+        height: "100vh"
       }}
     >
       <Grid item xs={10} md={8} lg={6} xl={4}>
