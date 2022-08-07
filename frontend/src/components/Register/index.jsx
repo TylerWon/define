@@ -17,7 +17,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import { selectUser, register } from "../../state/slices/userSlice";
@@ -27,6 +27,9 @@ export default function Register(props) {
   // State
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailInUse, setIsEmailInUse] = useState(false);
+
+  // React Router hooks
+  const navigate = useNavigate();
 
   // React Redux hooks
   const user = useSelector(selectUser);
@@ -43,6 +46,8 @@ export default function Register(props) {
     };
 
     dispatch(register(data));
+
+    navigate("/profile");
   }
 
   // Effect: If user.status is "rejected", set isEmailInUse to true
