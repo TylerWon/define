@@ -29,8 +29,6 @@ export default function Header(props) {
   return (
     <Grid
       container
-      position="absolute"
-      top="0px"
       alignItems="center"
       justifyContent="center"
       sx={{ 
