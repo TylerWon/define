@@ -8,6 +8,7 @@ import DefineTheme from "./theme/DefineTheme";
 
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import Register from "./components/Register";
 
 export default function App(props) {
 
@@ -17,7 +18,9 @@ export default function App(props) {
         <Routes>
           <Route element={<Navbar />}>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/dictionary/:word" element={<SearchResult />} /> */}
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="/login" element={<Login />} /> */}
+            {/* <Route path="/search/:word" element={<SearchResult />} /> */}
 
             {/* <Route element={<AuthorizedRoutes />}> */}
               {/* <Route path="/profile" element={<Profile />} /> */}
@@ -25,8 +28,6 @@ export default function App(props) {
             {/* </Route> */}
           </Route>
 
-          {/* <Route path="/login" element={<Login />} /> */}
-          {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
