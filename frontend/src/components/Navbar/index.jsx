@@ -66,7 +66,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <AppBar sx={{ bgcolor: "white", borderBottom: "2px solid #DCDCDC" }}>
+      <AppBar sx={{ bgcolor: "white" }}>
         <Toolbar>
           <Grid
             container
