@@ -26,6 +26,9 @@ export default function LoginForm(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
+  // React Router hooks
+  const navigate = useNavigate();
+  
   // React Redux hooks
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -41,9 +44,11 @@ export default function LoginForm(props) {
   }
 
   // Effect:
+  // If user.status is "fulfilled", navigate to Profile page
   // If user.status is "rejected", login failed because credentials are invalid so set invalidCredentials to true
   useEffect(() => {
-    if (user.status === "rejected") setInvalidCredentials(true);
+    if (user.status === "fulfilled") navigate("/profile");
+    else if (user.status === "rejected") setInvalidCredentials(true);
   }, [user.status])
 
   return (
