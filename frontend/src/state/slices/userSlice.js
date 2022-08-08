@@ -20,7 +20,7 @@ export const login = createAsyncThunk("user/login", async (data) => {
 // Thunk for logging a User out
 export const logout = createAsyncThunk("user/logout", async () => {
   const response = await axios.get("/api/logout/");
-  return response;
+  return response.data;
 });
 
 // Thunk for registering a User
@@ -56,7 +56,7 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder 
       .addCase(logout.fulfilled, (state, action) => {
-        state.status = "fulfilled";
+        state.status = initialState.status;
         state.id = initialState.id;
         state.email = initialState.email;
         state.firstName = initialState.firstName;
