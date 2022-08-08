@@ -23,7 +23,7 @@ export default function Header(props) {
   // Handler for when the User searches for a word
   const handleSearchSubmit = (values) => {
     const word = values["word"];
-    navigate(`/dictionary/${word}`);
+    navigate(`/search/${word}`);
   }
 
   return (
