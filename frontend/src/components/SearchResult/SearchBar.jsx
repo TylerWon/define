@@ -15,10 +15,10 @@ export default function SearchBar(props) {
       justifyContent="center"
       sx={{ 
         width: "100%",
-        paddingTop: "150px"
+        padding: "150px 0px 25px"
       }}
     >
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={10} lg={6}>
         <WordSearchBar initialValue={params.word}/>
       </Grid>
     </Grid>
