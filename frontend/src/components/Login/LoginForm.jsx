@@ -24,8 +24,10 @@ import { selectUser, login } from "../../state/slices/userSlice";
 export default function LoginForm(props) {
   // State
   const [showPassword, setShowPassword] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   // React Redux hooks
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   // Handler for when the login form is submitted
@@ -37,6 +39,12 @@ export default function LoginForm(props) {
 
     dispatch(login(data));
   }
+
+  // Effect:
+  // If user.status is "rejected", login failed because credentials are invalid so set invalidCredentials to true
+  useEffect(() => {
+    if (user.status === "rejected") setInvalidCredentials(true);
+  }, [user.status])
 
   return (
     <Formik
@@ -53,7 +61,7 @@ export default function LoginForm(props) {
       })}
       onSubmit={(values) => handleSubmit(values)}
     >
-      {({errors, touched}) => (
+      {({errors, touched, handleChange}) => (
         <Form style={{ width: "100%" }}>
           <Stack
             spacing={2}
@@ -66,8 +74,20 @@ export default function LoginForm(props) {
               name="email"
               label="Email"
               type="email"
-              error={touched.email && errors.email ? true : false}
-              helperText={touched.email && errors.email ? errors.email : ""}
+              error={touched.email && errors.email || invalidCredentials ? true : false}
+              helperText={
+                touched.email && errors.email ? 
+                  errors.email 
+                  : 
+                  invalidCredentials ?
+                    "Incorrect email or password"
+                    : 
+                    ""
+              }
+              onChange={(e) => {
+                handleChange(e);
+                if (invalidCredentials) setInvalidCredentials(false);
+              }}
               required
               fullWidth
             />
@@ -76,7 +96,7 @@ export default function LoginForm(props) {
               name="password"
               label="Password"
               type={showPassword ? "text" : "password"}
-              error={touched.password && errors.password ? true : false}
+              error={touched.password && errors.password || invalidCredentials? true : false}
               helperText={touched.password && errors.password ? errors.password : ""}
               InputProps={{
                 endAdornment: (
