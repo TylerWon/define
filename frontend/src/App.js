@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
+import SearchResult from "./components/SearchResult";
 
 export default function App(props) {
 
@@ -21,7 +22,7 @@ export default function App(props) {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/search/:word" element={<SearchResult />} /> */}
+            <Route path="/search/:word" element={<SearchResult />} />
 
             {/* <Route element={<AuthorizedRoutes />}> */}
               {/* <Route path="/profile" element={<Profile />} /> */}
