@@ -22,9 +22,12 @@ import { selectUser, login } from "../../state/slices/userSlice";
 
 // The form where the user enters their information on the Login page
 export default function LoginForm(props) {
+  // State
+  const [showPassword, setShowPassword] = useState(false);
+
   // React Redux hooks
   const dispatch = useDispatch();
-  
+
   // Handler for when the login form is submitted
   const handleSubmit = (values) => {
     const data = {
@@ -72,8 +75,18 @@ export default function LoginForm(props) {
               as={TextField}
               name="password"
               label="Password"
+              type={showPassword ? "text" : "password"}
               error={touched.password && errors.password ? true : false}
               helperText={touched.password && errors.password ? errors.password : ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
               required
               fullWidth
             />
