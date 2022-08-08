@@ -5,23 +5,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import (
-  Word,
-  Definition,
-  Type,
-)
+from .models import Word
 
-from .serializers import (
-  DefinitionSerializer,
-  TypeSerializer,
-  UserSerializer,
-  WordSerializer,
-  WordAndDefinitionsSerializer,
-)
+from .serializers import UserSerializer, WordSerializer
 
-from .permissions import (
-  UserPermissions,
-)
+from .permissions import UserPermissions
 
 # Supported request methods:
 #   - GET = List all Users/retrieve a User
@@ -58,16 +46,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer = WordSerializer(words, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
-
-  # Supported request methods:
-  #   - GET = Retrieve the Words (and their Definitions) of a User
-  @action(detail=True, methods=["get"])
-  def words_and_definitions(self, request, pk):
-    words = Word.objects.filter(users=pk)
-
-    serializer = WordAndDefinitionsSerializer(words, many=True)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
   
    # Supported request methods:
   #   - GET = Update the password of a User
@@ -101,16 +79,6 @@ class WordViewSet(viewsets.ModelViewSet):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-  # Supported request methods:
-  #   - GET = Retrieve the Definitions of a Word
-  @action(detail=True, methods=["get"])
-  def definitions(self, request, pk):
-    definitions = Definition.objects.filter(word=pk)
-
-    serializer = DefinitionSerializer(definitions, many=True)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
   # Supported request methods:
   #   - GET = Add a User to a Word whose spelling is pk
@@ -155,46 +123,6 @@ class WordViewSet(viewsets.ModelViewSet):
       return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response({ "detail": "The User is not associated with the Word"}, status=status.HTTP_400_BAD_REQUEST)
-
-# Supported request methods:
-#   - POST = Create a Word and its Definitions
-class WordAndDefinitionsViewSet(viewsets.ModelViewSet):
-  queryset = Word.objects.all()
-  serializer_class = WordAndDefinitionsSerializer
-  permission_classes = [permissions.AllowAny]
-  http_method_names = ["post"]
-
-# Supported request methods:
-#   - GET = List all Types/retrieve a Type
-#   - POST = Create a Type
-#   - PUT = Update all fields of a Type
-#   - PATCH = Update some fields of a Type
-#   - DELETE = Delete a Type
-class TypeViewSet(viewsets.ModelViewSet):
-  queryset = Type.objects.all()
-  serializer_class = TypeSerializer
-  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-  # Supported request methods:
-  #   - GET = Retrieve the Definitions for a Type
-  @action(detail=True, methods=["get"])
-  def definitions(self, request, pk):
-    definitions = Definition.objects.filter(type=pk)
-
-    serializer = DefinitionSerializer(definitions, many=True)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
-
-# Supported request methods:
-#   - GET = List all Definitions/retrieve a Definition
-#   - POST = Create a Definition
-#   - PUT = Update all fields of a Definition
-#   - PATCH = Update some fields of a Definition
-#   - DELETE = Delete a Definition
-class DefinitionViewSet(viewsets.ModelViewSet):
-  queryset = Definition.objects.all()
-  serializer_class = DefinitionSerializer
-  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # Supported request methods:
 #   - POST = Log a User in
