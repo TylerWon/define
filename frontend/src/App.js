@@ -7,6 +7,7 @@ import {
 import DefineTheme from "./theme/DefineTheme";
 
 import Home from "./components/Home";
+import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 
@@ -19,7 +20,7 @@ export default function App(props) {
           <Route element={<Navbar />}>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<Login />} />
             {/* <Route path="/search/:word" element={<SearchResult />} /> */}
 
             {/* <Route element={<AuthorizedRoutes />}> */}
