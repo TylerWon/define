@@ -1,23 +1,9 @@
 from django.contrib import admin
 
-from .models import (
-  Word,
-  Definition,
-  Type,
-)
+from .models import Word
 
 class WordAdmin(admin.ModelAdmin):
-  list_display = ["id", "spelling"]
-  list_filter = ["id", "spelling"]
-
-class TypeAdmin(admin.ModelAdmin):
-  list_display = ["id", "name"]
-  list_filter = ["id", "name"]
-
-class DefinitionAdmin(admin.ModelAdmin):
-  list_display = ["id", "word", "type"]
-  list_filter = ["id", "word", "type"]
+  list_display = ["id", "spelling", "word_class"]
+  list_filter = ["id", "spelling", "word_class"]
 
 admin.site.register(Word, WordAdmin)
-admin.site.register(Type, TypeAdmin)
-admin.site.register(Definition, DefinitionAdmin)
