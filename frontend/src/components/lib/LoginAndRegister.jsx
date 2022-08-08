@@ -20,7 +20,7 @@ export default function LoginAndRegister(props) {
         paddingTop: "125px"
       }}
     >
-      <Grid item xs={10} sm={8} md={6} lg={4}>
+      <Grid item xs={10} sm={6} md={5} lg={4} xl={3}>
         <Stack
           spacing={4}
           alignItems="center"
