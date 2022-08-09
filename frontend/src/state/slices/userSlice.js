@@ -32,14 +32,8 @@ export const logout = createAsyncThunk("user/logout", async () => {
 
 // Thunk for registering a User
 export const register = createAsyncThunk("user/register", async (data) => {
-  const ret = {};
-  
   const response = await axios.post("/api/users/", data);
-  ret["user"] = response.data;
-
-  ret["words"] = [];
-
-  return ret;
+  return response.data;
 });
 
 // Thunk for updating a User's info
@@ -79,9 +73,7 @@ export const userSlice = createSlice({
         localStorage.removeItem("user");
       })
 
-      .addMatcher((action) => {
-        return action.type == login.fulfilled || action.type == register.fulfilled || action.type == updateUser.fulfilled
-      }, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         const user = action.payload["user"];
         const words = action.payload["words"];
 
@@ -90,6 +82,20 @@ export const userSlice = createSlice({
         state.firstName = user.first_name;
         state.lastName = user.last_name;
         state.words = words;
+        state.status = "fulfilled";
+
+        localStorage.setItem("user", JSON.stringify(state));
+      })
+
+      .addMatcher((action) => {
+        return action.type == register.fulfilled || action.type == updateUser.fulfilled;
+      }, (state, action) => {
+        const user = action.payload;
+
+        state.id = user.id;
+        state.email = user.email;
+        state.firstName = user.first_name;
+        state.lastName = user.last_name;
         state.status = "fulfilled";
 
         localStorage.setItem("user", JSON.stringify(state));
