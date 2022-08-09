@@ -13,8 +13,15 @@ const initialState = {
 // Thunks
 // Thunk for logging a User in
 export const login = createAsyncThunk("user/login", async (data) => {
-  const response = await axios.post("/api/login/", data);
-  return response.data;
+  const ret = {};
+
+  let response = await axios.post("/api/login/", data);
+  ret["user"] = response.data;
+
+  response = await axios.get(`/api/users/${ret.user.id}/words/`);
+  ret["words"] = response.data;
+
+  return ret;
 });
 
 // Thunk for logging a User out
