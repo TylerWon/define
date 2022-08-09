@@ -6,8 +6,8 @@ const initialState = {
   email: "",
   firstName: "",
   lastName: "",
-  status: "idle",
-  error: null,
+  words: [],
+  status: "idle"
 };
 
 // Thunks
@@ -25,8 +25,14 @@ export const logout = createAsyncThunk("user/logout", async () => {
 
 // Thunk for registering a User
 export const register = createAsyncThunk("user/register", async (data) => {
+  const ret = {};
+  
   const response = await axios.post("/api/users/", data);
-  return response.data
+  ret["user"] = response.data;
+
+  ret["words"] = [];
+
+  return ret;
 });
 
 // Thunk for updating a User's info
@@ -68,13 +74,15 @@ export const userSlice = createSlice({
       .addMatcher((action) => {
         return action.type == login.fulfilled || action.type == register.fulfilled || action.type == updateUser.fulfilled
       }, (state, action) => {
-        const user = action.payload;
+        const user = action.payload["user"];
+        const words = action.payload["words"];
 
-        state.status = "fulfilled";
         state.id = user.id;
         state.email = user.email;
         state.firstName = user.first_name;
         state.lastName = user.last_name;
+        state.words = words;
+        state.status = "fulfilled";
 
         localStorage.setItem("user", JSON.stringify(state));
       })
@@ -89,7 +97,6 @@ export const userSlice = createSlice({
         return action.type == login.rejected || action.type == logout.rejected || action.type == register.rejected || action.type == updateUser.rejected 
       }, (state, action) => {
         state.status = "rejected";
-        state.error = action.error.message;
       })
   }
 })
