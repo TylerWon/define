@@ -69,11 +69,12 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder 
       .addCase(logout.fulfilled, (state, action) => {
-        state.status = initialState.status;
         state.id = initialState.id;
         state.email = initialState.email;
         state.firstName = initialState.firstName;
         state.lastName = initialState.lastName;
+        state.words = initialState.words;
+        state.status = initialState.status;
 
         localStorage.removeItem("user");
       })
