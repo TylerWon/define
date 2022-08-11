@@ -57,6 +57,14 @@ export const addWord = createAsyncThunk("user/addWord", async (data, thunkAPI) =
   }
 })
 
+// Thunk for removing a Word from a User's words
+export const removeWord = createAsyncThunk("user/removeWord", async (data, thunkAPI) => {
+  const user = thunkAPI.getState().user;
+  
+  const response = await axios.patch(`/api/words/${data.spelling}/remove_user/`, { user: user.id });
+  return response.data;
+})
+
 // Custom Selectors
 // Get user
 export const selectUser = state => state.user;
@@ -89,11 +97,19 @@ export const userSlice = createSlice({
       })
 
       .addCase(addWord.fulfilled, (state, action) => {
-        console.log(action);
         const word = action.payload;
-        console.log(word);
 
         state.words = state.words.concat(word);
+        state.status = "fulfilled";
+      })
+
+      .addCase(removeWord.fulfilled, (state, action) => {
+        const removedWord = action.payload;
+
+        const oldWords = state.words;
+        const newWords = oldWords.filter((word) => word.id !== removedWord.id);
+
+        state.words = newWords;
         state.status = "fulfilled";
       })
 
@@ -131,7 +147,8 @@ export const userSlice = createSlice({
           action.type == logout.pending || 
           action.type == register.pending || 
           action.type == updateUser.pending ||
-          action.type == addWord.pending
+          action.type == addWord.pending ||
+          action.type == removeWord.pending
         );
       }, (state, action) => {
         state.status = "pending";
@@ -143,7 +160,8 @@ export const userSlice = createSlice({
           action.type == logout.rejected || 
           action.type == register.rejected || 
           action.type == updateUser.rejected ||
-          action.type == addWord.rejected
+          action.type == addWord.rejected ||
+          action.type == removeWord.rejected
         );
       }, (state, action) => {
         state.status = "rejected";
