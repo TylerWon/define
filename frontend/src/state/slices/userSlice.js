@@ -1,13 +1,14 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  id: "",
-  email: "",
-  firstName: "",
-  lastName: "",
-  words: [],
-  status: "idle"
+// Constants
+const INITIAL_STATE = {
+  id: "",           // The user's id
+  email: "",        // The user's email
+  firstName: "",    // The user's first name
+  lastName: "",     // The user's last name
+  words: [],        // The user's words
+  status: "idle"    // Status of thunk action
 };
 
 // Thunks
@@ -72,17 +73,17 @@ export const selectUser = state => state.user;
 // User slice
 export const userSlice = createSlice({
   name: "user",
-  initialState: initialState,
+  initialState: INITIAL_STATE,
   reducers: {},
   extraReducers(builder) {
     builder 
       .addCase(logout.fulfilled, (state, action) => {
-        state.id = initialState.id;
-        state.email = initialState.email;
-        state.firstName = initialState.firstName;
-        state.lastName = initialState.lastName;
-        state.words = initialState.words;
-        state.status = initialState.status;
+        state.id = INITIAL_STATE.id;
+        state.email = INITIAL_STATE.email;
+        state.firstName = INITIAL_STATE.firstName;
+        state.lastName = INITIAL_STATE.lastName;
+        state.words = INITIAL_STATE.words;
+        state.status = INITIAL_STATE.status;
 
         localStorage.clear();
       })
