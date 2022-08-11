@@ -93,7 +93,7 @@ export const userSlice = createSlice({
         state.words = initialState.words;
         state.status = initialState.status;
 
-        localStorage.removeItem("user");
+        localStorage.clear();
       })
 
       .addCase(addWord.fulfilled, (state, action) => {
@@ -124,7 +124,7 @@ export const userSlice = createSlice({
         state.words = words;
         state.status = "fulfilled";
 
-        localStorage.setItem("user", JSON.stringify(state));
+        localStorage.setItem("userId", user.id);
       })
 
       .addMatcher((action) => {
@@ -138,7 +138,7 @@ export const userSlice = createSlice({
         state.lastName = user.last_name;
         state.status = "fulfilled";
 
-        localStorage.setItem("user", JSON.stringify(state));
+        if (action.type == register.fulfilled) localStorage.setItem("userId", user.id);
       })
 
       .addMatcher((action) => {
