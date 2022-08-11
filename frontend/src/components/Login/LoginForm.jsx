@@ -112,6 +112,10 @@ export default function LoginForm(props) {
                   </InputAdornment>
                 )
               }}
+              onChange={(e) => {
+                handleChange(e);
+                if (invalidCredentials) setInvalidCredentials(false);
+              }}
               required
               fullWidth
             />
