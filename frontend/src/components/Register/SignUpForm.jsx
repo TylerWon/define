@@ -13,12 +13,12 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-import { selectUser, register } from "../../state/slices/userSlice";
+import { register } from "../../state/slices/userSlice";
 
 // The form where the user enters their information on the Sign Up page
 export default function SignUpForm(props) {
@@ -30,11 +30,12 @@ export default function SignUpForm(props) {
   const navigate = useNavigate();
 
   // React Redux hooks
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   // Handler for when the sign up form is submitted
-  const handleSubmit = (values) => {
+  // If registration is successful, navigate to Profile page
+  // Otherwise, registration failed because email is already in use so set isEmailInUse to true
+  const handleSubmit = async (values) => {
     const data = {
       username: values.email,
       email: values.email,
@@ -43,16 +44,13 @@ export default function SignUpForm(props) {
       password: values.password
     };
 
-    dispatch(register(data));
+    try {
+      await dispatch(register(data)).unwrap();
+      navigate("/profile");
+    } catch(e) {
+      setIsEmailInUse(true);
+    }
   }
-
-  // Effect: 
-  // If user.status is "fulfilled", navigate to Profile page
-  // If user.status is "rejected", registration failed because email is already in use so set isEmailInUse to true
-  useEffect(() => {
-    if (user.status === "fulfilled") navigate("/profile");
-    else if (user.status === "rejected") setIsEmailInUse(true);
-  }, [user.status])
 
   return (
     <Formik
