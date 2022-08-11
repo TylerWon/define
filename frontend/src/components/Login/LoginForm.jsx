@@ -5,7 +5,6 @@ import {
 } from "formik";
 import {
   Button,
-  Grid,
   IconButton,
   InputAdornment,
   Stack,
@@ -13,12 +12,12 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-import { selectUser, login } from "../../state/slices/userSlice";
+import { login } from "../../state/slices/userSlice";
 
 // The form where the user enters their information on the Login page
 export default function LoginForm(props) {
@@ -30,26 +29,24 @@ export default function LoginForm(props) {
   const navigate = useNavigate();
   
   // React Redux hooks
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   // Handler for when the login form is submitted
-  const handleSubmit = (values) => {
+  // If login is successful, navigate to Profile page
+  // Otherwise, login failed because credentials are invalid so set invalidCredentials to true
+  const handleSubmit = async (values) => {
     const data = {
       email: values.email,
       password: values.password
     };
 
-    dispatch(login(data));
+    try {
+      await dispatch(login(data)).unwrap();
+      navigate("/profile");
+    } catch(e) {
+      setInvalidCredentials(true);
+    }
   }
-
-  // Effect:
-  // If user.status is "fulfilled", navigate to Profile page
-  // If user.status is "rejected", login failed because credentials are invalid so set invalidCredentials to true
-  useEffect(() => {
-    if (user.status === "fulfilled") navigate("/profile");
-    else if (user.status === "rejected") setInvalidCredentials(true);
-  }, [user.status])
 
   return (
     <Formik
