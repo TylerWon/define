@@ -44,6 +44,19 @@ export const updateUser = createAsyncThunk("user/update", async (data, thunkAPI)
   return response.data;
 })
 
+// Thunk for adding a Word to a User's words
+export const addWord = createAsyncThunk("user/addWord", async (data, thunkAPI) => {
+  const user = thunkAPI.getState().user;
+
+  try {
+    const response = await axios.patch(`/api/words/${data.spelling}/add_user/`, { user: user.id });
+    return response.data; 
+  } catch(e) {
+    const response = await axios.post("/api/words/", { users: [user.id], ...data });
+    return response.data;
+  }
+})
+
 // Custom Selectors
 // Get user
 export const selectUser = state => state.user;
@@ -75,6 +88,15 @@ export const userSlice = createSlice({
         localStorage.removeItem("user");
       })
 
+      .addCase(addWord.fulfilled, (state, action) => {
+        console.log(action);
+        const word = action.payload;
+        console.log(word);
+
+        state.words = state.words.concat(word);
+        state.status = "fulfilled";
+      })
+
       .addCase(login.fulfilled, (state, action) => {
         const user = action.payload["user"];
         const words = action.payload["words"];
@@ -104,13 +126,25 @@ export const userSlice = createSlice({
       })
 
       .addMatcher((action) => {
-        return action.type == login.pending || action.type == logout.pending || action.type == register.pending || action.type == updateUser.pending 
+        return (
+          action.type == login.pending || 
+          action.type == logout.pending || 
+          action.type == register.pending || 
+          action.type == updateUser.pending ||
+          action.type == addWord.pending
+        );
       }, (state, action) => {
         state.status = "pending";
       })
 
       .addMatcher((action) => {
-        return action.type == login.rejected || action.type == logout.rejected || action.type == register.rejected || action.type == updateUser.rejected 
+        return (
+          action.type == login.rejected || 
+          action.type == logout.rejected || 
+          action.type == register.rejected || 
+          action.type == updateUser.rejected ||
+          action.type == addWord.rejected
+        );
       }, (state, action) => {
         state.status = "rejected";
       })
