@@ -45,6 +45,19 @@ export const updateUser = createAsyncThunk("user/update", async (data, thunkAPI)
   return response.data;
 })
 
+// Thunk for getting a User's info
+export const getUser = createAsyncThunk("user/getUser", async (userId) => {
+  const ret = {};
+
+  let response = await axios.get(`/api/users/${userId}/`);
+  ret["user"] = response.data;
+
+  response = await axios.get(`/api/users/${userId}/words/`);
+  ret["words"] = response.data;
+
+  return ret;
+})
+
 // Thunk for adding a Word to a User's words
 export const addWord = createAsyncThunk("user/addWord", async (data, thunkAPI) => {
   const user = thunkAPI.getState().user;
@@ -105,7 +118,9 @@ export const userSlice = createSlice({
         state.status = "fulfilled";
       })
 
-      .addCase(login.fulfilled, (state, action) => {
+      .addMatcher((action) => {
+        return action.type == login.fulfilled || action.type == getUser.fulfilled;
+      }, (state, action) => {
         const user = action.payload["user"];
         const words = action.payload["words"];
 
@@ -116,7 +131,7 @@ export const userSlice = createSlice({
         state.words = words;
         state.status = "fulfilled";
 
-        localStorage.setItem("userId", user.id);
+        if (action.type == login.fulfilled) localStorage.setItem("userId", user.id);
       })
 
       .addMatcher((action) => {
@@ -139,6 +154,7 @@ export const userSlice = createSlice({
           action.type == logout.pending || 
           action.type == register.pending || 
           action.type == updateUser.pending ||
+          action.type == getUser.pending ||
           action.type == addWord.pending ||
           action.type == removeWord.pending
         );
@@ -152,6 +168,7 @@ export const userSlice = createSlice({
           action.type == logout.rejected || 
           action.type == register.rejected || 
           action.type == updateUser.rejected ||
+          action.type == getUser.rejected ||
           action.type == addWord.rejected ||
           action.type == removeWord.rejected
         );
