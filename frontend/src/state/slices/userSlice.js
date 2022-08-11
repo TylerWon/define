@@ -73,16 +73,7 @@ export const selectUser = state => state.user;
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
-  reducers: {
-    getUserFromLocalStorage: (state) => {
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      state.id = user.id;
-      state.email = user.email;
-      state.firstName = user.firstName;
-      state.lastName = user.lastName;
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder 
       .addCase(logout.fulfilled, (state, action) => {
@@ -168,9 +159,6 @@ export const userSlice = createSlice({
       })
   }
 })
-
-// Action creators
-export const { getUserFromLocalStorage } = userSlice.actions;
 
 // Reducer
 export default userSlice.reducer;
