@@ -38,10 +38,8 @@ export const register = createAsyncThunk("user/register", async (data) => {
 });
 
 // Thunk for updating a User's info
-export const updateUser = createAsyncThunk("user/update", async (data, thunkAPI) => {
-  const user = thunkAPI.getState().user;
-
-  const response = await axios.patch(`/api/users/${user.id}/`, data);
+export const updateUser = createAsyncThunk("user/update", async (data) => {
+  const response = await axios.patch(`/api/users/${data.id}/`, data);
   return response.data;
 })
 
