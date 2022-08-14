@@ -1,23 +1,19 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 
+import Definition from "./Definition";
 import SearchBar from "./SearchBar";
 
 // The Search Result page
 export default function SearchResult(props) {
   return (
-    <Box 
-      display="flex"
-      alignItems="flex-start"
-      justifyContent="center"
+    <Stack 
+      alignItems="center"
+      justifyContent="flex-start"
       bgcolor="bgSecondary.main"
-      sx={{
-        width: "100vw",
-        height: "100vh"
-      }}
     >
       <SearchBar />
-      {/* <Definition /> */}
+      <Definition />
       {/* <Synonyms /> */}
-    </Box>
+    </Stack>
   );
 }
