@@ -52,5 +52,5 @@ class WordSerializer(serializers.ModelSerializer):
       "id",
       "users",
       "spelling",
-      "word_class"
+      "part_of_speech"
     ]

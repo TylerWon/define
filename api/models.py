@@ -5,4 +5,4 @@ from django.db import models
 class Word(models.Model):
   users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="words")
   spelling = models.CharField(unique=True, max_length=50)
-  word_class = models.CharField(max_length=25)
+  part_of_speech = models.CharField(max_length=25)
