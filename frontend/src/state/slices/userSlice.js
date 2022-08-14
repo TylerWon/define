@@ -81,6 +81,9 @@ export const removeWord = createAsyncThunk("user/removeWord", async (wordSpellin
 // Get user
 export const selectUser = state => state.user;
 
+// Get a word by its spelling
+export const selectWordBySpelling = (state, spelling) => state.user.words.find(word => word.spelling === spelling);
+
 // User slice
 export const userSlice = createSlice({
   name: "user",
