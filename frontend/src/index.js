@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 
 import "./style/index.css"; 
 
+import DefineTheme from "./theme/DefineTheme";
+
 import App from "./App";
 import store from "./state/store";
 
@@ -24,6 +26,8 @@ axios.interceptors.request.use((config) => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <DefineTheme>
+      <App />
+    </DefineTheme>
   </Provider>
 );
