@@ -57,23 +57,19 @@ export const getUser = createAsyncThunk("user/getUser", async (userId) => {
 })
 
 // Thunk for adding a Word to a User's words
-export const addWord = createAsyncThunk("user/addWord", async (data, thunkAPI) => {
-  const user = thunkAPI.getState().user;
-
+export const addWord = createAsyncThunk("user/addWord", async (data) => {
   try {
-    const response = await axios.patch(`/api/words/${data.spelling}/add_user/`, { user: user.id });
+    const response = await axios.patch(`/api/words/${data.spelling}/add_user/`, { user: data.users[0] });
     return response.data; 
   } catch(e) {
-    const response = await axios.post("/api/words/", { users: [user.id], ...data });
+    const response = await axios.post("/api/words/", data);
     return response.data;
   }
 })
 
 // Thunk for removing a Word from a User's words
-export const removeWord = createAsyncThunk("user/removeWord", async (wordSpelling, thunkAPI) => {
-  const user = thunkAPI.getState().user;
-  
-  const response = await axios.patch(`/api/words/${wordSpelling}/remove_user/`, { user: user.id });
+export const removeWord = createAsyncThunk("user/removeWord", async (data) => {
+  const response = await axios.patch(`/api/words/${data.spelling}/remove_user/`, { user: data.userId });
   return response.data;
 })
 
