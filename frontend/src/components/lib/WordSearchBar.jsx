@@ -5,19 +5,15 @@ import {
 } from "formik";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 // A search bar for words
 export default function WordSearchBar(props) {
   const { initialValue } = props;
-
-  // React Router hooks
-  const navigate = useNavigate();
   
   // Handler for when the User searches for a word
   const handleSearchSubmit = (values) => {
     const word = values["word"];
-    navigate(`/search/${word}`);
+    window.location.href = `/search/${word}`;
   }
 
   return (
