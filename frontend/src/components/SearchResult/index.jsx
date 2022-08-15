@@ -40,6 +40,7 @@ export default function SearchResult(props) {
           alignItems="center"
           justifyContent="flex-start"
           bgcolor="bgSecondary.main"
+          sx={{ minHeight: "100vh" }}
         >
           <SearchBar word={params.word} />
           <Definition word={params.word} wordData={wordData} />
