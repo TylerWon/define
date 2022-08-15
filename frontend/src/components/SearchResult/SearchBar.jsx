@@ -1,12 +1,11 @@
 import { Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
 
 import WordSearchBar from "../lib/WordSearchBar";
 
 // The search bar on the Search Result page
 export default function SearchBar(props) {
-  // React Router hooks
-  const params = useParams();
+  // Props
+  const { word } = props;
 
   return (
     <Grid
@@ -19,7 +18,7 @@ export default function SearchBar(props) {
       }}
     >
       <Grid item xs={10} lg={6}>
-        <WordSearchBar initialValue={params.word}/>
+        <WordSearchBar initialValue={word}/>
       </Grid>
     </Grid>
   );

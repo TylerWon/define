@@ -11,23 +11,22 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 
 import { addWord, removeWord, selectUser, selectWordBySpelling } from "../../state/slices/userSlice";
 
 // The section on the Search Result page that displays the definition for the searched word
 export default function Definition(props) {
+  // Props
+  const { word } = props;
+  
   // State
   const [wordData, setWordData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // React Router hooks
-  const params = useParams();
-
   // React Redux hooks
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const isWordSaved = useSelector(state => selectWordBySpelling(state, params.word))
+  const isWordSaved = useSelector(state => selectWordBySpelling(state, word))
 
   // Handler for when User saves the word
   const handleSave = async (wordData, user) => {
@@ -72,7 +71,7 @@ export default function Definition(props) {
 
   // Effect: Gets information about the searched word on initial component render
   useEffect(() => {
-    getWord(params.word);
+    getWord(word);
   }, [])
 
   // A group of definitions for the word. Each group corresponds to a different part of speech
