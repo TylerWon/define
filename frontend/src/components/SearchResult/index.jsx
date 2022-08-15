@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 import Definition from "./Definition";
 import SearchBar from "./SearchBar";
-import Synonyms from "./Synonyms";
+import AntonymsOrSynonyms from "./AntonymsOrSynonyms";
 
 // The Search Result page
 export default function SearchResult(props) {
@@ -43,7 +43,7 @@ export default function SearchResult(props) {
         >
           <SearchBar word={params.word} />
           <Definition word={params.word} wordData={wordData} />
-          <Synonyms wordData={wordData} />
+          <AntonymsOrSynonyms name="synonyms" wordData={wordData} />
         </Stack>
       :
         null
