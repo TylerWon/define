@@ -44,6 +44,7 @@ export default function SearchResult(props) {
           <SearchBar word={params.word} />
           <Definition word={params.word} wordData={wordData} />
           <AntonymsOrSynonyms name="synonyms" wordData={wordData} />
+          <AntonymsOrSynonyms name="antonyms" wordData={wordData} />
         </Stack>
       :
         null
