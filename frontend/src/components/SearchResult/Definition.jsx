@@ -2,6 +2,7 @@ import axios from "axios";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import {
+  Box,
   Grid,
   IconButton,
   Paper,
@@ -82,6 +83,7 @@ export default function Definition(props) {
       <Stack
         alignItems="flex-start"
         justifyContent="center"
+        sx={{ width: "100%" }}
       >
         <Typography sx={{ fontWeight: 700 }}>{data.partOfSpeech}</Typography>
         <Grid
@@ -91,16 +93,20 @@ export default function Definition(props) {
         >
           {data.definitions.slice(0, 3).map((definition, index) => 
             <Grid item xs={11.5} key={index}>
-              <Stack
-                spacing={1}
-                direction="row"
+              <Grid
+                container
                 alignItems="flex-start"
-                justifyContent="flex-start"
-                sx={{ width: "100%" }}
+                justifyContent="flex-end"
               >
-                <Typography>{index + 1}.</Typography>
-                <Typography>{definition.definition}</Typography>
-              </Stack>
+                <Grid item xs={0.7} sm={0.4}>
+                  <Typography>{index + 1}.</Typography>
+                </Grid>
+                <Grid item xs={true}>
+                  <Box sx={{ width: "100%" }}>
+                    <Typography>{definition.definition}</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           )}
         </Grid>
