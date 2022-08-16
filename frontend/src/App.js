@@ -8,7 +8,7 @@ import {
 
 import Home from "./components/Home";
 import Login from "./components/Login";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navigation/Navbar";
 import Register from "./components/Register";
 import SearchResult from "./components/SearchResult";
 import { getUser } from "./state/slices/userSlice";
