@@ -33,8 +33,14 @@ export const logout = createAsyncThunk("user/logout", async () => {
 
 // Thunk for registering a User
 export const register = createAsyncThunk("user/register", async (data) => {
+  const ret = {};
+
   const response = await axios.post("/api/users/", data);
-  return response.data;
+  ret["user"] = response.data;
+
+  ret["words"] = [];
+
+  return ret;
 });
 
 // Thunk for updating a User's info
@@ -98,6 +104,16 @@ export const userSlice = createSlice({
         localStorage.clear();
       })
 
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const user = action.payload;
+
+        state.id = user.id;
+        state.email = user.email;
+        state.firstName = user.first_name;
+        state.lastName = user.last_name;
+        state.status = "fulfilled";
+      })
+
       .addCase(addWord.fulfilled, (state, action) => {
         const word = action.payload;
 
@@ -116,7 +132,7 @@ export const userSlice = createSlice({
       })
 
       .addMatcher((action) => {
-        return action.type == login.fulfilled || action.type == getUser.fulfilled;
+        return action.type == login.fulfilled || action.type == register.fulfilled || action.type == getUser.fulfilled;
       }, (state, action) => {
         const user = action.payload["user"];
         const words = action.payload["words"];
@@ -128,21 +144,7 @@ export const userSlice = createSlice({
         state.words = words;
         state.status = "fulfilled";
 
-        if (action.type == login.fulfilled) localStorage.setItem("userId", user.id);
-      })
-
-      .addMatcher((action) => {
-        return action.type == register.fulfilled || action.type == updateUser.fulfilled;
-      }, (state, action) => {
-        const user = action.payload;
-
-        state.id = user.id;
-        state.email = user.email;
-        state.firstName = user.first_name;
-        state.lastName = user.last_name;
-        state.status = "fulfilled";
-
-        if (action.type == register.fulfilled) localStorage.setItem("userId", user.id);
+        if (action.type == login.fulfilled || action.type == register.fulfilled) localStorage.setItem("userId", user.id);
       })
 
       .addMatcher((action) => {
