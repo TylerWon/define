@@ -6,6 +6,7 @@ import {
   Routes
 } from "react-router-dom";
 
+import AuthorizedRoutes from "./components/Navigation/AuthorizedRoutes";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navigation/Navbar";
@@ -52,10 +53,10 @@ export default function App(props) {
               <Route path="/login" element={<Login />} />
               <Route path="/search/:word" element={<SearchResult />} />
 
-              {/* <Route element={<AuthorizedRoutes />}> */}
+              <Route element={<AuthorizedRoutes />}>
                 {/* <Route path="/profile" element={<Profile />} /> */}
                 {/* <Route path="/settings/account" element={<AccountSettings />} /> */}
-              {/* </Route> */}
+              </Route>
             </Route>
 
             <Route path="*" element={<NotFound />} />
