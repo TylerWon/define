@@ -143,7 +143,7 @@ export const userSlice = createSlice({
         state.email = user.email;
         state.firstName = user.first_name;
         state.lastName = user.last_name;
-        state.dateJoined = user.date_joined;
+        state.dateJoined = new Date(user.date_joined).toLocaleDateString();
         state.words = words;
         state.status = "fulfilled";
 
