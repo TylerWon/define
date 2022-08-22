@@ -9,8 +9,10 @@ import {
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navigation/Navbar";
+import NotFound from "./components/NotFound";
 import Register from "./components/Register";
 import SearchResult from "./components/SearchResult";
+
 import { getUser } from "./state/slices/userSlice";
 
 export default function App(props) {
@@ -56,7 +58,7 @@ export default function App(props) {
               {/* </Route> */}
             </Route>
 
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       :
