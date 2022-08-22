@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navigation/Navbar";
 import NotFound from "./components/NotFound";
+import Profile from "./components/Profile";
 import Register from "./components/Register";
 import SearchResult from "./components/SearchResult";
 
@@ -54,7 +55,7 @@ export default function App(props) {
               <Route path="/search/:word" element={<SearchResult />} />
 
               <Route element={<AuthorizedRoutes />}>
-                {/* <Route path="/profile" element={<Profile />} /> */}
+                <Route path="/profile" element={<Profile />} />
                 {/* <Route path="/settings/account" element={<AccountSettings />} /> */}
               </Route>
             </Route>
