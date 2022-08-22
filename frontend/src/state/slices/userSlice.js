@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   email: "",        // The user's email
   firstName: "",    // The user's first name
   lastName: "",     // The user's last name
+  dateJoined: "",   // The day the user joined
   words: [],        // The user's words
   status: "idle"    // Status of thunk action
 };
@@ -98,6 +99,7 @@ export const userSlice = createSlice({
         state.email = INITIAL_STATE.email;
         state.firstName = INITIAL_STATE.firstName;
         state.lastName = INITIAL_STATE.lastName;
+        state.dateJoined = INITIAL_STATE.dateJoined;
         state.words = INITIAL_STATE.words;
         state.status = INITIAL_STATE.status;
 
@@ -141,6 +143,7 @@ export const userSlice = createSlice({
         state.email = user.email;
         state.firstName = user.first_name;
         state.lastName = user.last_name;
+        state.dateJoined = user.date_joined;
         state.words = words;
         state.status = "fulfilled";
 
