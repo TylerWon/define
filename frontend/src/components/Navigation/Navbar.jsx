@@ -58,7 +58,7 @@ export default function Navbar(props) {
     const { color, name, route } = props;
 
     return (
-      <MuiLink component={ReactRouterLink} to={route} color={color} underline="none">
+      <MuiLink component={ReactRouterLink} to={route} color={color} underline="hover">
         <Typography>{name}</Typography>
       </MuiLink>
     );
@@ -94,7 +94,7 @@ export default function Navbar(props) {
                 {user.id ? 
                   <> 
                     <PageLink color="primary" name="Profile" route="/profile" />
-                    <MuiLink component="button" onClick={handleLogoutClick} underline="none" color="primary">
+                    <MuiLink component="button" onClick={handleLogoutClick} underline="hover" color="primary">
                       <Typography>Logout</Typography>
                     </MuiLink>     
                   </>
