@@ -76,7 +76,7 @@ export const addWord = createAsyncThunk("user/addWord", async (data) => {
 
 // Thunk for removing a Word from a User's words
 export const removeWord = createAsyncThunk("user/removeWord", async (data) => {
-  const response = await axios.patch(`/api/words/${data.spelling}/remove_user/`, { user: data.userId });
+  const response = await axios.patch(`/api/words/${data.spelling}/remove_user/`, { user: data.user });
   return response.data;
 })
 
