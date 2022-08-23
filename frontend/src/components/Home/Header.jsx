@@ -35,7 +35,7 @@ export default function Header(props) {
             <Typography variant="h1" color="white">Expand your vocabulary one word at a time</Typography>
             <Typography color="white">Find and save definitions for over 150,000 words</Typography>
           </Stack>
-          <WordSearchBar initialValue="" />
+          <WordSearchBar autoFocus={true} initialValue="" />
         </Stack>
       </Grid>
     </Grid>

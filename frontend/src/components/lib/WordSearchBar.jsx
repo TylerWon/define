@@ -8,7 +8,7 @@ import { InputAdornment, TextField } from "@mui/material";
 
 // A search bar for words
 export default function WordSearchBar(props) {
-  const { initialValue } = props;
+  const { autoFocus, initialValue  } = props;
   
   // Handler for when the User searches for a word
   const handleSearchSubmit = (values) => {
@@ -40,7 +40,7 @@ export default function WordSearchBar(props) {
             borderRadius: "5px"
           }}
           fullWidth  
-          autoFocus
+          autoFocus={autoFocus}
         />
       </Form>
     </Formik>

@@ -18,7 +18,7 @@ export default function SearchBar(props) {
       }}
     >
       <Grid item xs={10} lg={6}>
-        <WordSearchBar initialValue={word}/>
+        <WordSearchBar autoFocus={false} initialValue={word}/>
       </Grid>
     </Grid>
   );
