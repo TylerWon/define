@@ -103,6 +103,7 @@ export default function AddWordButton(props) {
                 name="word"
                 type="text"
                 variant="outlined"
+                size="small"
                 placeholder="Add a word"
                 error={noResults || wordAlreadySaved}
                 helperText={
