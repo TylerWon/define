@@ -27,7 +27,7 @@ export default function MyWords(props) {
       container
       alignItems="center"
       justifyContent="center"
-      sx={{ padding: "50px 0px 25px" }}
+      sx={{ padding: "25px 0px 25px" }}
     > 
       <Grid item xs={10} md={8} xl={6}>
         <Stack
