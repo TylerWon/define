@@ -6,7 +6,7 @@ export default function Profile(props) {
   return (
     <>
       <UserInfo />
-      {/* <MyWords /> */}
+      <MyWords />
     </>
   )
 }
