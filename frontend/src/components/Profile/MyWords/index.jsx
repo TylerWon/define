@@ -44,19 +44,18 @@ export default function MyWords(props) {
               <Typography variant="h4">My Words</Typography>
             </Grid>
             <Grid item xs={true}>
-              <WordSearchBar autoFocus={false} initialValue="" />
+              <Stack
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                justifyContent="flex-end"
+                sx={{ width: "100%" }}
+              >
+                <AddWordButton dispatch={dispatch} user={user} />
+                <RemoveWordButton dispatch={dispatch} wordsToRemove={selectedWords} user={user} />
+              </Stack>
             </Grid>
           </Grid>
-          <Stack
-            spacing={2}
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-start"
-            sx={{ width: "100%" }}
-          >
-            <AddWordButton dispatch={dispatch} user={user} />
-            <RemoveWordButton dispatch={dispatch} wordsToRemove={selectedWords} user={user} />
-          </Stack>
           <WordsTable setSelectedWords={setSelectedWords} user={user} />
         </Stack>
       </Grid>
