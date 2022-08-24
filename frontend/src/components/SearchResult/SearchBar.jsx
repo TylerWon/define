@@ -14,7 +14,7 @@ export default function SearchBar(props) {
       justifyContent="center"
       sx={{ 
         width: "100%",
-        padding: "150px 0px 25px"
+        padding: "125px 0px 25px"
       }}
     >
       <Grid item xs={10} lg={6}>
