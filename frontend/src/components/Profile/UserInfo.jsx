@@ -22,10 +22,9 @@ export default function UserInfo(props) {
       container
       alignItems="center"
       justifyContent="center"
-      bgcolor="bgSecondary.main"
       sx={{ 
         width: "100%",
-        padding: "150px 0px 25px"
+        padding: "125px 0px 25px"
       }}
     >
       <Grid item xs={10} md={8} xl={6}>
