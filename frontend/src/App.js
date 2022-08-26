@@ -6,6 +6,7 @@ import {
   Routes
 } from "react-router-dom";
 
+import AccountSettings from "./components/AccountSettings";
 import AuthorizedRoutes from "./components/Navigation/AuthorizedRoutes";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -56,7 +57,7 @@ export default function App(props) {
 
               <Route element={<AuthorizedRoutes />}>
                 <Route path="/profile" element={<Profile />} />
-                {/* <Route path="/settings/account" element={<AccountSettings />} /> */}
+                <Route path="/account/settings" element={<AccountSettings />} />
               </Route>
             </Route>
 
