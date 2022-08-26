@@ -130,7 +130,8 @@ export default function SignUpForm(props) {
                   errors.email 
                 : isEmailInUse ? 
                     "Email is already associated with an account" 
-                    : ""
+                  : 
+                    ""
               }
               onChange={(e) => {
                 handleChange(e);
