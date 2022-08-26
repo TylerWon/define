@@ -56,10 +56,10 @@ class UserViewSet(viewsets.ModelViewSet):
     except:
       return Response({ "detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    old_password = request.data.get("old_password")
+    current_password = request.data.get("current_password")
     new_password = request.data.get("new_password")
 
-    if user.check_password(old_password):
+    if user.check_password(current_password):
       user.set_password(new_password)
       user.save()
 
@@ -67,7 +67,7 @@ class UserViewSet(viewsets.ModelViewSet):
       
       return Response({ "detail": "Password updated."}, status=status.HTTP_200_OK)
     
-    return Response({ "detail": "Password not updated. Old password does match new password."}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({ "detail": "Password not updated. Provided current password did not match the stored current password." }, status=status.HTTP_400_BAD_REQUEST)
     
 # Supported request methods:
 #   - GET = List all Words/retrieve a Word
