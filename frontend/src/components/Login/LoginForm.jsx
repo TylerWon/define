@@ -80,10 +80,10 @@ export default function LoginForm(props) {
               helperText={
                 touched.email && errors.email ? 
                   errors.email 
-                  : 
+                : 
                   invalidCredentials ?
                     "Incorrect email or password"
-                    : 
+                  : 
                     ""
               }
               onChange={(e) => {
