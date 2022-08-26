@@ -66,7 +66,7 @@ export default function LoginForm(props) {
       {({errors, touched, handleChange}) => (
         <Form style={{ width: "100%" }}>
           <Stack
-            spacing={2}
+            spacing={3}
             alignItems="center"
             justifyContent="center"
             sx={{ width: "100%" }}
