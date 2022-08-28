@@ -21,7 +21,7 @@ export const defineTheme = createTheme({
     }
   },
   typography: {
-    fontFamily: "Inter, Roboto, Helvetica, Arial, sans-serif",
+    fontFamily: "Inter, Helvetica, Arial, sans-serif",
     h1: {
       fontWeight: "700",
       fontSize: "48px"
