@@ -1,5 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
+from django.template import loader
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -156,3 +162,46 @@ class LogoutView(APIView):
     logout(request)
 
     return Response({ "detail": "Logout successful."}, status=status.HTTP_200_OK)
+
+# Supported request methods:
+#     - POST = Send a password reset email to a user
+class PasswordResetEmailView(APIView):
+  permission_classes = [permissions.AllowAny]
+
+  # Expected data:
+  #   - email = the email of the user requesting a password reset
+  def post(self, request):
+    email = request.data.get("email")
+
+    # Verify User exists
+    try:
+      user = User.objects.get(username=email)
+    except:
+      return Response({ "message": "User not found." }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Prepare data for email
+    domain = get_current_site(request).domain
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    subject = "Define - Password reset"
+
+    context = {
+      "domain": domain,
+      "uid": uid,
+      "token": token,
+      "user": user
+    }
+    text_content = loader.render_to_string("emails/password-reset-email.txt", context)
+    html_content = loader.render_to_string("emails/password-reset-email.html", context)
+
+    # Create email
+    email_message = EmailMultiAlternatives(subject=subject, body=text_content, to=[email])
+    email_message.attach_alternative(html_content, "text/html")
+
+    # Send email
+    # try:
+    email_message.send()
+    # except:
+    # return Response({ "message": f"Password reset email unable to be sent to {email}."}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({ "message": f"Password reset email sent to {email}."}, status=status.HTTP_200_OK)
