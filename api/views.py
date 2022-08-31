@@ -199,9 +199,35 @@ class PasswordResetEmailView(APIView):
     email_message.attach_alternative(html_content, "text/html")
 
     # Send email
-    # try:
-    email_message.send()
-    # except:
-    # return Response({ "message": f"Password reset email unable to be sent to {email}."}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+      email_message.send()
+    except:
+      return Response({ "message": f"Password reset email unable to be sent to {email}."}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({ "message": f"Password reset email sent to {email}."}, status=status.HTTP_200_OK)
+  
+# Supported request methods:
+#   - POST = Check if a password reset url is valid
+class PasswordResetCheckView(APIView):
+  permission_classes = [permissions.AllowAny]
+
+  # Expected data:
+  #   - uid = the uid from the password reset url
+  #   - token = the token from the password reset url
+  def post(self, request):
+    uidb64 = request.data.get("uid")
+    token = request.data.get("token")
+
+    # Verify uid maps to a User
+    try:
+      uid = urlsafe_base64_decode(uidb64).decode()
+      user = User.objects.get(pk=uid)
+    except:
+      return Response({ "message": "uid invalid" }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Verify token is valid
+    # Reference for what makes an invalid token: https://stackoverflow.com/questions/46234627/how-does-default-token-generator-store-tokens
+    if not default_token_generator.check_token(user, token):
+      return Response({ "message": "token invalid" }, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response({ "message": "token and uid are valid" }, status=status.HTTP_200_OK)
