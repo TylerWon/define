@@ -92,15 +92,20 @@ class WordViewSet(viewsets.ModelViewSet):
 
   # Supported request methods:
   #   - GET = Add a User to a Word whose spelling is pk
+  #
+  # Expected data:
+  #   - user = the id of the User to add to the Word
   @action(detail=True, methods=["patch"])
   def add_user(self, request, pk):
+    user_id = request.data.get("user")
+
     try:
       word = Word.objects.get(spelling=pk)
     except:
       return Response({ "detail": "Word not found."}, status=status.HTTP_404_NOT_FOUND)
 
     try:
-      user = User.objects.get(pk=request.data["user"])
+      user = User.objects.get(pk=user_id)
     except:
       return Response({ "detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
     
