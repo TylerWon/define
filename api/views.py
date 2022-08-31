@@ -183,7 +183,7 @@ class PasswordResetEmailView(APIView):
   permission_classes = [permissions.AllowAny]
 
   # Expected data:
-  #   - email = the email of the user requesting a password reset
+  #   - email = the email of the User requesting a password reset
   def post(self, request):
     email = request.data.get("email")
 
