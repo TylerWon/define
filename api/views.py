@@ -91,7 +91,7 @@ class WordViewSet(viewsets.ModelViewSet):
   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
   # Supported request methods:
-  #   - GET = Add a User to a Word whose spelling is pk
+  #   - PATCH = Add a User to a Word whose spelling is pk
   #
   # Expected data:
   #   - user = the id of the User to add to the Word
@@ -116,16 +116,21 @@ class WordViewSet(viewsets.ModelViewSet):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
   # Supported request methods:
-  #   - GET = Remove a User from a Word whose spelling is pk
+  #   - PATCH = Remove a User from a Word whose spelling is pk
+  #
+  # Expected data:
+  #   - user = the id of the User to add to the Word
   @action(detail=True, methods=["patch"])
   def remove_user(self, request, pk):
+    user_id = request.data.get("user")
+
     try:
       word = Word.objects.get(spelling=pk)
     except:
       return Response({ "detail": "Word not found."}, status=status.HTTP_404_NOT_FOUND)
 
     try:
-      user = User.objects.get(pk=request.data["user"])
+      user = User.objects.get(pk=user_id)
     except:
       return Response({ "detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
     
