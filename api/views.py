@@ -231,3 +231,56 @@ class PasswordResetCheckView(APIView):
       return Response({ "message": "token invalid" }, status=status.HTTP_400_BAD_REQUEST)
     
     return Response({ "message": "token and uid are valid" }, status=status.HTTP_200_OK)
+
+# Supported request methods:
+#   - POST = Updates a User's password to a new password and sends a confirmation email. This view is used only for 
+#     password resets (i.e. when the User forgot their password). Normal password updates use a different view.
+class PasswordResetUpdateView(APIView):
+  permission_classes = [permissions.AllowAny]
+
+  # Expected data:
+  #   - new_password = the user's new password
+  #   - uid = the uid from the password reset url
+  #   - token = the token from the password reset url
+  def post(self, request):
+    new_password = request.data.get("new_password")
+    uidb64 = request.data.get("uid")
+    token = request.data.get("token")
+
+    # Verify uid maps to a User
+    try:
+      uid = urlsafe_base64_decode(uidb64).decode()
+      user = User.objects.get(pk=uid)
+    except:
+      return Response({ "message": "uid invalid" }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Verify token is valid
+    # Reference for what makes an invalid token: https://stackoverflow.com/questions/46234627/how-does-default-token-generator-store-tokens
+    if not default_token_generator.check_token(user, token):
+      return Response({ "message": "token invalid" }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Update the User's password
+    user.set_password(new_password)
+    user.save()
+
+    # Prepare data for email
+    subject = "Define - Password reset confirmation"
+    to_email = user.email
+
+    context = {
+      "user": user
+    }
+    text_content = loader.render_to_string("emails/password-reset-confirmation-email.txt", context)
+    html_content = loader.render_to_string("emails/password-reset-confirmation-email.html", context)
+
+    # Create email
+    email_message = EmailMultiAlternatives(subject=subject, body=text_content, to=[to_email])
+    email_message.attach_alternative(html_content, "text/html")
+
+    # Send email
+    try:
+      email_message.send()
+    except:
+      return Response({ "message": f"Password updated but confirmation email unable to be sent to {to_email}."}, status=status.HTTP_200_OK)
+
+    return Response({ "message": f"Password updated and confirmation email sent to {to_email}."}, status=status.HTTP_200_OK)
