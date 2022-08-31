@@ -53,17 +53,21 @@ class UserViewSet(viewsets.ModelViewSet):
 
     return Response(serializer.data, status=status.HTTP_200_OK)
   
-   # Supported request methods:
-  #   - GET = Update the password of a User
+  # Supported request methods:
+  #   - PATCH = Update the password of a User
+  #
+  # Expected data:
+  #   - current_password = the User's current password
+  #   - new_password = the User's new password
   @action(detail=True, methods=["patch"])
   def password(self, request, pk):
+    current_password = request.data.get("current_password")
+    new_password = request.data.get("new_password")
+
     try:
       user = User.objects.get(pk=pk)
     except:
       return Response({ "detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-
-    current_password = request.data.get("current_password")
-    new_password = request.data.get("new_password")
 
     if user.check_password(current_password):
       user.set_password(new_password)
