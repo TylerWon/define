@@ -133,6 +133,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email settings
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = os.environ["EMAIL_PORT"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+DEFAULT_FROM_EMAIL = os.environ["EMAIL_HOST_USER"]
+EMAIL_USE_TLS = True
+
 # django-webpack-loader settings
 WEBPACK_LOADER = {
   'DEFAULT': {
