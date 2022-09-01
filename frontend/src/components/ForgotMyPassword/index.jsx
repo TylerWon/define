@@ -15,7 +15,7 @@ const ForgotMyPassword = (props) => {
   return (
     <Grid
       container
-      spacing={5}
+      rowSpacing={5}
       alignItems="center"
       justifyContent="center"
       sx={{ 
