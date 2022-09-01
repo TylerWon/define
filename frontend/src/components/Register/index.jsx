@@ -36,7 +36,7 @@ export default function Register(props) {
             <Typography>Create your Define account</Typography>
           </Stack>
           <SignUpForm />
-          <Typography>Already have an account? <MuiLink component={ReactRouterLink} to="/login" underline="none">Sign in</MuiLink></Typography>
+          <Typography>Already have an account? <MuiLink component={ReactRouterLink} to="/login" underline="hover">Sign in</MuiLink></Typography>
         </Stack>
       </Grid>
     </Grid>
