@@ -13,6 +13,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navigation/Navbar";
 import NotFound from "./components/NotFound";
+import PasswordReset from "./components/PasswordReset";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import SearchResult from "./components/SearchResult";
@@ -53,9 +54,10 @@ export default function App(props) {
             <Route element={<Navbar />}>
               <Route path="/" element={<Home />} />
               <Route path="/forgot-my-password" element={<ForgotMyPassword />} />
-              <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/password-reset/:uid/:token" element={<PasswordReset />} />
               <Route path="/search/:word" element={<SearchResult />} />
+              <Route path="/register" element={<Register />} />
 
               <Route element={<AuthorizedRoutes />}>
                 <Route path="/profile" element={<Profile />} />
