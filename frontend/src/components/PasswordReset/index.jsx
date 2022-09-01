@@ -55,7 +55,7 @@ const PasswordReset = (props) => {
           justifyContent="center"
           sx={{ 
             width: "100%", 
-            padding: "125px 0px 125px"
+            padding: "125px 0px 25px"
           }}
         >
           <Grid item xs={12} sx={{ textAlign: "center" }}>
