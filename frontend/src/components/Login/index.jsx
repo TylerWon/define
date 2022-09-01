@@ -17,7 +17,7 @@ export default function Login(props) {
       justifyContent="center"
       sx={{
         width: "100%",
-        paddingTop: "125px"
+        padding: "125px 0px 25px"
       }}
     >
       <Grid item xs={10} sm={6} md={5} lg={4} xl={3}>
