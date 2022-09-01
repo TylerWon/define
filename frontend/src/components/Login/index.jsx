@@ -40,7 +40,8 @@ export default function Login(props) {
             alignItems="center"
             justifyContent="center"
           >
-            <Typography>Don't have an account? <MuiLink component={ReactRouterLink} to="/register" underline="none">Sign up</MuiLink></Typography>
+            <Typography>Don't have an account? <MuiLink component={ReactRouterLink} to="/register" underline="hover">Sign up</MuiLink></Typography>
+            <Typography><MuiLink component={ReactRouterLink} to="/forgot-my-password" underline="hover">Forgot my password</MuiLink></Typography>
           </Stack>
         </Stack>
       </Grid>
