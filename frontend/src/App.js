@@ -8,6 +8,7 @@ import {
 
 import AccountSettings from "./components/AccountSettings";
 import AuthorizedRoutes from "./components/Navigation/AuthorizedRoutes";
+import ForgotMyPassword from "./components/ForgotMyPassword";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navigation/Navbar";
@@ -51,6 +52,7 @@ export default function App(props) {
           <Routes>
             <Route element={<Navbar />}>
               <Route path="/" element={<Home />} />
+              <Route path="/forgot-my-password" element={<ForgotMyPassword />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/search/:word" element={<SearchResult />} />
