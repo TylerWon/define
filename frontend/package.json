@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --config ./configs/webpack-dev-config.js"
+    "dev": "./node_modules/.bin/webpack-dev-server --config ./configs/webpack-dev-config.js",
+    "build": "./node_modules/.bin/webpack --config ./configs/webpack-prod-config.js"
   },
   "keywords": [],
   "author": "",
