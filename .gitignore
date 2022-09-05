@@ -48,6 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Static files for production
+frontend/staticfiles
+
 # PostgreSQL Data
 data/
 
