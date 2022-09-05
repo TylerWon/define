@@ -49,7 +49,7 @@ Thumbs.db
 *.wmv
 
 # Static files for production
-frontend/staticfiles
+staticfiles
 
 # PostgreSQL Data
 data/
