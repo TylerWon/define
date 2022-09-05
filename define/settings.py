@@ -34,7 +34,7 @@ elif DEV:
 
 
 if PROD:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['define-production.herokuapp.com']
 elif DEV:
     ALLOWED_HOSTS = ['*']
 
