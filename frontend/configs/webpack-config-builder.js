@@ -76,6 +76,21 @@ const makeDevConfig = () => {
   })
 }
 
+const makeProdConfig = () => {
+  return merge(makeBaseConfig(), {
+    mode: "production",
+    output: {
+      path: path.resolve(__dirname, "../static/webpack_bundles/"),
+    },
+    plugins: [
+      new BundleTracker({
+        filename: path.resolve(__dirname, "../webpack-stats.json"),
+      }),
+    ],
+  })
+}
+
 module.exports = {
   makeDevConfig,
+  makeProdConfig
 }
