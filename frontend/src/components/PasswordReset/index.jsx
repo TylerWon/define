@@ -58,40 +58,43 @@ const PasswordReset = (props) => {
             padding: "125px 0px 25px"
           }}
         >
-          <Grid item xs={12} sx={{ textAlign: "center" }}>
-            <Typography variant="h1">Password reset</Typography>      
-          </Grid>
-          <Grid item xs={10} sm={6} md={5} lg={4} xl={3}>   
+
+          <Grid item xs={10} sm={8} md={6} lg={5} xl={4}>
             <Stack
-              spacing={2}
+              spacing={4}
               alignItems="center"
               justifyContent="center"
               sx={{ width: "100%" }}
             >
-              {!invalidCredentials ?
-                !passwordUpdated ?
-                  <>
-                    <Typography sx={{ textAlign: "center" }}>Enter a new password</Typography>
+              <Typography variant="h1">Password reset</Typography>
+              <Stack
+                spacing={2}
+                alignItems="center"
+                justifyContent="center"
+                sx={{ width: "100%" }}
+              >
+                {!invalidCredentials ?
+                  !passwordUpdated ?
                     <PasswordResetForm 
                       setPasswordUpdated={setPasswordUpdated}
                       setInvalidCredentials={setInvalidCredentials}
                       uid={params.uid} 
                       token={params.token}  
                     />
-                  </>
+                  :
+                    <>
+                      <Typography sx={{ textAlign: "center" }}>
+                        Your password was reset successfully. Redirecting to login page...
+                      </Typography>
+                      <CircularProgress />
+                    </>
                 :
-                  <>
-                    <Typography sx={{ textAlign: "center" }}>
-                      Your password was reset successfully. Redirecting to login page...
-                    </Typography>
-                    <CircularProgress />
-                  </>
-              :
-                <Typography sx={{ textAlign: "center" }}>
-                  This password reset link is invalid, possibly because it has already been used. If you would still like 
-                  to reset your password, request a new link <MuiLink component={ReactRouterLink} to="/forgot-my-password" underline="hover">here</MuiLink>.
-                </Typography>
-              }
+                  <Typography sx={{ textAlign: "center" }}>
+                    This password reset link is invalid, possibly because it has already been used. If you would still like 
+                    to reset your password, request a new link <MuiLink component={ReactRouterLink} to="/forgot-my-password" underline="hover">here</MuiLink>.
+                  </Typography>
+                }
+              </Stack>
             </Stack>
           </Grid>
         </Grid>
