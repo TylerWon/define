@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+import dj_database_url
 import os
 
 # Constants that indicate the environment the application is running in (production or development)
@@ -86,18 +87,11 @@ WSGI_APPLICATION = 'define.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# In production, connect to Heroku Postgres (reference: https://devcenter.heroku.com/articles/connecting-heroku-postgres#connecting-in-python)
+# In dev, connect to Docker Postgres service
 if PROD:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['PROD_DB_NAME'],
-            'USER': os.environ['PROD_DB_USERNAME'],
-            'PASSWORD': os.environ['PROD_DB_PASSWORD'],
-            'HOST': os.environ['PROD_DB_HOSTNAME'],
-            'PORT': os.environ['PROD_DB_PORT'],
-        }
-    }
+    DATABASES = {}
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 elif DEV:
     DATABASES = {
         'default': {
