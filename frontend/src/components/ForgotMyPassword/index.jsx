@@ -23,36 +23,38 @@ const ForgotMyPassword = (props) => {
         padding: "125px 0px 25px"
       }}
     >
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
-        <Typography variant="h1">Forgot my password</Typography>     
-      </Grid>
-      <Grid item xs={10} sm={6} md={5} lg={4} xl={3}>    
+      <Grid item xs={10} sm={8} md={6} lg={5} xl={4}>
         <Stack
-          spacing={2}
+          spacing={4}
           alignItems="center"
           justifyContent="center"
           sx={{ width: "100%" }}
         >
-          {!submitted ?
-            <>
+          <Stack
+            spacing={1}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Typography variant="h1">Forgot my password</Typography>
+            {!submitted ?
               <Typography sx={{ textAlign: "center" }}>
                 Tell us the email address associated with your Define account, and we’ll send you an email with a 
                 link to reset your password.
               </Typography>
-              <ForgotMyPasswordForm setSubmitted={setSubmitted} />
-            </>
-          :
-            <>
-              <Typography sx={{ textAlign: "center" }}>
-                We've emailed you instructions for resetting your password, if an account exists with the email you 
-                entered. It should arrive in your inbox shortly.
-              </Typography>
-              <Typography sx={{ textAlign: "center" }}>
-                If you do not receive the email, please make sure you entered the email address you registered with, 
-                and check your spam folder.
-              </Typography>
-            </>
-          }
+            :
+              <>
+                <Typography sx={{ textAlign: "center" }}>
+                  We've emailed you instructions for resetting your password, if an account exists with the email you 
+                  entered. It should arrive in your inbox shortly.
+                </Typography>
+                <Typography sx={{ textAlign: "center" }}>
+                  If you do not receive the email, please make sure you entered the email address you registered with, 
+                  and check your spam folder.
+                </Typography>
+              </>
+            }
+          </Stack>
+          {!submitted ? <ForgotMyPasswordForm setSubmitted={setSubmitted} /> : null}
         </Stack>
       </Grid>
     </Grid>
