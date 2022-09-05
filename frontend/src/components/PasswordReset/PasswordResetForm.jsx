@@ -38,7 +38,7 @@ const PasswordResetForm = (props) => {
     setSubmitted(true);
 
     const data = {
-      new_password: values.password,
+      new_password: values.newPassword,
       uid: uid,
       token: token
     }
@@ -60,10 +60,10 @@ const PasswordResetForm = (props) => {
   return (
     <Formik
       initialValues={{
-        password: ""
+        newPassword: ""
       }}
       validationSchema={Yup.object({
-        password: Yup.string()
+        newPassword: Yup.string()
         .matches(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
             excludeEmptyString: true,
             message: "Must contain 8 characters: one uppercase, one lowercase, one number and one special case character"
@@ -82,11 +82,11 @@ const PasswordResetForm = (props) => {
           > 
             <Field
               as={TextField}
-              name="password"
+              name="newPassword"
               type={showPassword ? "text" : "password"}
-              label="Password"
-              error={touched.password && errors.password ? true : false}
-              helperText={touched.password && errors.password ? errors.password : ""}
+              label="New password"
+              error={touched.newPassword && errors.newPassword ? true : false}
+              helperText={touched.newPassword && errors.newPassword ? errors.newPassword : ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
