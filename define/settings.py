@@ -14,22 +14,29 @@ from pathlib import Path
 
 import os
 
+# Constants that indicate the environment the application is running in (production or development)
+PROD = os.environ['ENV_TYPE'] == "prod"
+DEV = os.environ['ENV_TYPE'] == "dev"
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+if PROD:
+    DEBUG = False
+elif DEV:
+    DEBUG = True
 
 
-# Application definition
+if PROD:
+    ALLOWED_HOSTS = ['*']
+elif DEV:
+    ALLOWED_HOSTS = ['*']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'webpack_loader',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,7 +62,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'define.urls'
+
 
 TEMPLATES = [
     {
@@ -77,24 +87,36 @@ WSGI_APPLICATION = 'define.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DEV_DB_NAME'],
-        'USER': os.environ['DEV_USERNAME'],
-        'PASSWORD': os.environ['DEV_PASSWORD'],
-        'HOST': os.environ['DEV_HOSTNAME'],
-        'PORT': os.environ['DEV_PORT'],
+if PROD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['PROD_DB_NAME'],
+            'USER': os.environ['PROD_DB_USERNAME'],
+            'PASSWORD': os.environ['PROD_DB_PASSWORD'],
+            'HOST': os.environ['PROD_DB_HOSTNAME'],
+            'PORT': os.environ['PROD_DB_PORT'],
+        }
     }
-}
+elif DEV:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['DEV_DB_NAME'],
+            'USER': os.environ['DEV_DB_USERNAME'],
+            'PASSWORD': os.environ['DEV_DB_PASSWORD'],
+            'HOST': os.environ['DEV_DB_HOSTNAME'],
+            'PORT': os.environ['DEV_DB_PORT'],
+        }
+    }
+
 
 # Model to use to represent a user
 AUTH_USER_MODEL = 'auth.User'
 
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -113,7 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -125,13 +146,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static'), )
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'frontend/staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Email settings
 EMAIL_HOST = "smtp.gmail.com"
@@ -141,12 +164,13 @@ EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 DEFAULT_FROM_EMAIL = os.environ["EMAIL_HOST_USER"]
 EMAIL_USE_TLS = True
 
+
 # django-webpack-loader settings
 WEBPACK_LOADER = {
-  'DEFAULT': {
-    'CACHE': not DEBUG,
-    'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
-    'POLL_INTERVAL': 0.1,
-    'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
-  }
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+    }
 }
