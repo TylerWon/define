@@ -1,3 +1,3 @@
-const { makeDevConfig } = require ("./webpack-config-builder");
+const { makeDevConfig } = require("./webpack-config-builder");
 
 module.exports = makeDevConfig();
