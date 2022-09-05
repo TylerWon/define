@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'frontend',
     'api',
@@ -140,15 +141,11 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# In production, serve static files using whitenoise (reference: https://devcenter.heroku.com/articles/django-assets)
-# In dev, serve static files locally
+# Using whitenoise to serve static files because of Heroku (reference: https://devcenter.heroku.com/articles/django-assets)
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static'), )
-
-if PROD:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-if DEV:
-    STATIC_URL = 'static/'  
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
 
 
 # Default primary key field type
