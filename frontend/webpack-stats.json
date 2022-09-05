@@ -1,0 +1,44 @@
+{
+  "status": "done",
+  "assets": {
+    "817c4274293e221c5076.woff": {
+      "name": "817c4274293e221c5076.woff",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/817c4274293e221c5076.woff"
+    },
+    "be7cb18dc7caf47cf7e9.woff2": {
+      "name": "be7cb18dc7caf47cf7e9.woff2",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/be7cb18dc7caf47cf7e9.woff2"
+    },
+    "b4f41b604df10acca3eb.jpg": {
+      "name": "b4f41b604df10acca3eb.jpg",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/b4f41b604df10acca3eb.jpg"
+    },
+    "runtime.23b51d0ad782c3c30291.js": {
+      "name": "runtime.23b51d0ad782c3c30291.js",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/runtime.23b51d0ad782c3c30291.js"
+    },
+    "main.b1dda392d967272c10e9.js.LICENSE.txt": {
+      "name": "main.b1dda392d967272c10e9.js.LICENSE.txt",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/main.b1dda392d967272c10e9.js.LICENSE.txt"
+    },
+    "vendors.45463353218e1e134b1e.js.LICENSE.txt": {
+      "name": "vendors.45463353218e1e134b1e.js.LICENSE.txt",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/vendors.45463353218e1e134b1e.js.LICENSE.txt"
+    },
+    "main.b1dda392d967272c10e9.js": {
+      "name": "main.b1dda392d967272c10e9.js",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/main.b1dda392d967272c10e9.js"
+    },
+    "vendors.45463353218e1e134b1e.js": {
+      "name": "vendors.45463353218e1e134b1e.js",
+      "path": "/Users/tyler/Programming/Projects/define/frontend/static/webpack_bundles/vendors.45463353218e1e134b1e.js"
+    }
+  },
+  "chunks": {
+    "main": [
+      "runtime.23b51d0ad782c3c30291.js",
+      "vendors.45463353218e1e134b1e.js",
+      "main.b1dda392d967272c10e9.js"
+    ]
+  }
+}
