@@ -12,7 +12,12 @@ services:
     container_name: define-web
     hostname: define-web
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "
+              pip install -r requirements.txt &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000
+            "
     volumes:
       - .:/code
     ports:
