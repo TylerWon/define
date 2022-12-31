@@ -16,7 +16,7 @@ export default function RemoveWordButton(props) {
     wordsToRemove.forEach(async word => {
       const data = {
         spelling: word,
-        user: user.id,
+        userId: user.id,
       }
 
       try {
